@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "material_complete": true,
+  "translation_unit": {
+    "project": "{{ project }}",
+    "work": "{{ work }}",
+    "id": "{{ translation_unit_id }}",
+    "source_language": "{{ source_language }}",
+    "target_language": "{{ target_language }}"
+  },
+  "source": {
+    "original": "{{ original_url_or_path }}",
+    "path": "{{ stable_working_copy_relative_to_project_root }}",
+    "verified": true
+  },
+  "glossary": null,
+  "context_to_read": [
+    {
+      "role": "{{ character_background_style_or_source }}",
+      "path": "{{ reference_path_relative_to_project_root }}",
+      "section": "{{ exact_markdown_heading_or_null }}"
+    }
+  ],
+  "terms": [
+    {
+      "source": "{{ source_term }}",
+      "target": null,
+      "disposition": "pending"
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Translation Workbench"
+  short_description: "Run a structured translation project"
+  default_prompt: "Use $translation-workbench to start or continue a source-grounded translation project."
