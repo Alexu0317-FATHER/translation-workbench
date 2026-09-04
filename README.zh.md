@@ -108,7 +108,7 @@ Skill 支持三种起点：
 
 ## 示例成品
 
-[浏览 Vermintide 同人翻译展示](showcase/index.html)。
+[浏览 Vermintide 同人翻译展示](https://alexu0317-father.github.io/translation-workbench/showcase/)（GitHub Pages 渲染后的页面）。源文件在 [`showcase/`](showcase/) 目录下；在仓库里点开其中的 `.html` 看到的是源码，不是渲染后的页面。
 
 展示目录包含一个章节索引、五篇已翻译的中英对照章节，以及页面实际引用的本地图片。它用于展示这套流程的真实产出，不会随 skill 一起安装。
 

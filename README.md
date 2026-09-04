@@ -108,7 +108,7 @@ Empty glossary, character, background, source, and style files are not created. 
 
 ## Showcase
 
-[Browse the Vermintide fan-translation showcase](showcase/index.html).
+[Browse the Vermintide fan-translation showcase](https://alexu0317-father.github.io/translation-workbench/showcase/) on GitHub Pages. The source files live under [`showcase/`](showcase/); opening the `.html` files there shows their source, not the rendered pages.
 
 The showcase contains one index page, five translated bilingual chapter pages, and the local images those pages reference. It is included as a real example of the workflow's output and is not installed with the skill.
 
