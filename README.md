@@ -2,139 +2,118 @@
 
 English | [简体中文](README.zh.md)
 
-Translation Workbench is an Agent Skill for running a structured translation project from source preparation through drafting, independent review, and user-led finalization.
+An Agent Skill for project-scale translation. The AI drafts, reviews, and keeps the records; the workflow distills your translation style; and above all, it lets you produce solid translations even when your command of the source language is not that strong.
+
+![A bilingual page produced by this workflow](docs/example-chapter.png)
+
+[Chapter 02, The King and Queen i' the Woods](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/02-king-and-queen/output/index.html)
 
 Current version: `0.1.1`
 
-It is designed for long-form or continuity-sensitive translation work that benefits from terminology, character or speaker context, background material, drafting notes, and a separate review pass. It is not limited to fiction, a particular language pair, or numbered chapters.
+## Features
 
-## Scope
+- The AI carries the work of understanding the source language. A translation is only as good as the translator's command of both languages, so the skill requires the AI to supply not just a rendering but the reasoning behind it. That reasoning is what closes the gap in your own grasp of the source.
+- The AI learns your translation style, keeps refining it, and holds it consistent across a long project.
+- This skill grew out of [a translation project of my own](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/): two weeks and 54 iterations, with the workflow proven in practice before it was frozen into a skill.
 
-The skill covers:
+## An example
 
-1. project initialization or adoption of existing material;
-2. source acquisition and verification;
-3. terminology and relevant-context preparation;
-4. complete translation drafting and drafting notes;
-5. independent review without editing the draft;
-6. user-led decision making and finalization.
+[Chapter 01, The Old Baron of Bluchendorf](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/01-old-baron/output/index.html) was translated by hand, and independent review caught a misreading:
 
-It does not include publishing, platform-specific conversion, dashboards, analytics, or subagent orchestration.
+> **Source**　if there was an hour's worth of light in the sky before the storms closed in, you were doing well.
+>
+> **My first draft**　如果在暴风雪来临前天空还有一小时的光亮就好了。 (back-translates to: if only there had been an hour of light in the sky before the storms came)
+>
+> **What the review flagged**　`you were doing well` lands on grim relief, that an hour of light counted as good luck, and not on the unfulfilled regret the draft expressed. The meaning is reversed. The evidence is grammatical: this is a real conditional in the past tense, describing what did happen from time to time that winter. An "if only" reading would need the subjunctive, `if there had been…, it would have been…`. The sentence just before it has a priest freezing to death at his pulpit, which also fits relief better than regret.
 
-The two bundled checkers use only the Python 3 standard library. They validate context handoffs and stage boundaries; they do not judge literary quality.
-
-## Supported runtimes
-
-The canonical skill is stored once at `skills/translation-workbench/` and is intended for both Codex and Claude Code.
+Google Translate and DeepL will not give you that. Every word in the line was one I knew; what defeated me was what they meant together in context. (The English line quoted here is the copyright of Fatshark.)
 
 ## Installation
 
-Recommended installation from GitHub:
+Recommended install from GitHub:
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench
 ```
 
-To target Codex and Claude Code explicitly:
+Install to both Codex and Claude Code:
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench -a codex -a claude-code
 ```
 
-The commands above install to the current project by default. Follow the installer's prompts if you prefer another supported scope or installation method.
-
-Manual project-level installation remains available:
-
-- Codex project skill location: `.agents/skills/translation-workbench/`
-- Claude Code project skill location: `.claude/skills/translation-workbench/`
-
-Install or copy the same complete skill directory into the location used by the runtime. Do not maintain separate copies of the translation rules by hand.
-
-To update an installation managed by the skills CLI:
+Manual installation also works: Codex at `.agents/skills/translation-workbench/`, Claude Code at `.claude/skills/translation-workbench/`. To update an existing installation:
 
 ```bash
 npx skills update translation-workbench
 ```
 
-The skill prefers a runtime-native structured question tool when a decision has a short, finite option set. Claude Code can use `AskUserQuestion`; Codex can use `request_user_input` when that tool is available. The skill falls back to ordinary conversation when no structured tool is available or the answer is open-ended.
-
-## Invocation
-
-Examples:
+Invocation examples:
 
 ```text
 Use translation-workbench to set up a translation project from these files.
 ```
 
+In Codex, name the skill directly:
+
 ```text
 $translation-workbench Start source preparation for the section named "The Crossing".
 ```
+
+In Claude Code, use the slash command:
 
 ```text
 /translation-workbench Continue the independent review of chapter 4.
 ```
 
-The first form relies on the runtime recognizing the skill name and description. Codex commonly uses `$translation-workbench`; Claude Code commonly uses `/translation-workbench`.
+## Workflow
 
-## Recommended session pattern
+| Stage | What you do | What the AI does |
+|---|---|---|
+| Initialization | Tell the AI whether this is a new project, an intake of existing material, or a continuation of a named translation unit | Read the existing project README if there is one, or create it, and confirm the existing directory layout with you |
+| Source preparation | Hand over whatever material you have | Verify the source is complete and check its provenance, search each candidate term against the existing glossary, list the unit's new terms, and set up the reference documents |
+| Translation | 1. Ask for the translation; 2. Review the new terms the AI proposes; 3. Wait for the output | Confirm the glossary, character profiles, and related material with you, then produce the draft and the drafting notes |
+| Independent review | Ask for the review and wait for the output | Review the draft against the source, glossary, character profiles, and style document, and write `review-notes.md` |
+| **Finalization** | 1. Read the translation; 2. Respond to each item in the review notes; 3. Tell the AI your reasoning; 4. Decide which conclusions are worth writing into the project's documents | 1. Record your decisions in the review notes; 2. Confirm the finalized translation and any approved updates to the glossary, character profiles, and style document; 3. Propose what is worth keeping and leave the call to you; 4. Produce the finished Markdown |
 
-Use a separate session for each major stage:
+Every stage checks its prerequisites before it starts. If material is missing, terms are still undecided, or existing review notes would be overwritten, the workflow stops and tells you what it needs.
 
-```text
-source preparation -> translation -> independent review -> finalization
-```
+## Getting more out of it
 
-At the start of a session, name the project, translation unit, and stage. For example:
+1. If you can, hand over a few sample chapters of your own translation. They help the AI understand your style before it drafts anything.
+2. During **translation**, when you review the terms and character profiles the AI proposes, think about which ones deserve to stay consistent across the whole project. Anything that only holds for a single chapter should stay out of the glossary and the character profiles. The further a project goes, the more a lean set of reference files pays off.
+3. During **finalization**, do not just give the AI your decision, tell it why you think so. **Your reasoning is what the AI relies on most when distilling your style.**
+4. Use a separate session for each stage to keep each stage's context clean. **Independent review** is currently the only stage that usually needs no human involvement, so it can run in a subagent.
 
-```text
-Use translation-workbench. Read this project's README and perform the translation stage for chapter 4.
-```
-
-At the end of a stage, the skill reports the generated files and suggests a short prompt for the next session. This is a recommendation, not an enforced session policy. Results may vary across models and long-session strategies that have not been tested.
-
-## Project initialization
-
-The skill supports three starting situations:
-
-- a new project with no existing structure;
-- existing source or reference material that needs to be organized;
-- an existing translation project that should keep its current structure.
-
-For new projects, the skill creates a project `README.md` from its bundled template. That README becomes the project entry point and records the language pair, works or translation units, file roles, project references, and workflow links.
-
-User-supplied Word documents, Markdown files, spreadsheets, PDFs, and other material remain unchanged. When the runtime can read them, the skill extracts relevant content into project documents using the bundled templates. It asks the user only when material conflicts, cannot be classified reliably, or requires an editorial choice.
-
-Empty glossary, character, background, source, and style files are not created. They appear only when the user provides relevant material or the project produces its first durable entry.
-
-## Example output
-
-![A bilingual chapter page produced by this workflow](docs/example-chapter.png)
-
-Each chapter is rendered as a side-by-side bilingual page: numbered paragraphs, footnotes that link to the translator's notes and back, a theme that follows the system, and a single-column fallback on narrow screens.
-
-A complete project built with this workflow — a Simplified Chinese translation of *Franz Lohner's Chronicle* — lives in its own repository, [franz-lohners-chronicle-zh](https://github.com/Alexu0317-FATHER/franz-lohners-chronicle-zh), and reads at [https://alexu0317-father.github.io/franz-lohners-chronicle-zh/](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/). Keeping it separate leaves this repository generic and small.
-
-The screenshot shows fan-translated material owned by Fatshark, reproduced only to illustrate the output format.
-
-## Canonical skill structure
+## What your project looks like after one chapter
 
 ```text
-skills/translation-workbench/
-├─ SKILL.md
-├─ agents/
-│  └─ openai.yaml
-├─ references/
-│  ├─ project-initialization.md
-│  ├─ sourcing.md
-│  ├─ translation.md
-│  ├─ independent-review.md
-│  └─ finalization.md
-├─ scripts/
-│  ├─ check_translation_context.py
-│  ├─ check_stage.py
-│  └─ test_*.py
-└─ assets/
-   └─ templates/
+your-translation-project/
+├─ README.md                  # Entry point: languages, translation units, file roles
+├─ <a translation unit>/
+│  ├─ source.md                 # Working copy of the source (filename is project-defined)
+│  ├─ sourcing-handoff.json     # Source-preparation-to-translation handoff
+│  ├─ <translated-title>.md     # Finalized translation
+│  ├─ drafting-notes.md         # Drafting notes
+│  └─ review-notes.md           # Review notes
+├─ glossary.md                 # Glossary
+├─ character-profiles.md       # Character profiles
+├─ translator-style.md         # Translator style
+├─ background-notes.md         # Background notes
+└─ sources.md                  # Source inventory
 ```
 
-See [CHANGELOG.md](CHANGELOG.md) for release history. This project is released under the [MIT License](LICENSE).
+Empty files are never pre-created. Each of these appears only once there is real content for it.
+
+## Tested scope and limits
+
+- Verified on one language pair (English to Chinese) and one kind of text (serialized fiction). Trying it on other subjects, languages, and genres is welcome; please open an [Issue](https://github.com/Alexu0317-FATHER/translation-workbench/issues) with what you find.
+- The models used for translation were Opus 5 and GPT-5.6 Sol. No other model has been tested.
+- The checkers depend only on the Python standard library.
+- CI is verified on Python 3.11.
+
+## The finished work, its source, and its license
+
+The complete project built with this workflow is my own translation project, [Franz Lohner's Chronicle in Simplified Chinese](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/), with its repository at [franz-lohners-chronicle-zh](https://github.com/Alexu0317-FATHER/franz-lohners-chronicle-zh). The bilingual pages are generated by separate build scripts of mine, not by this skill; this skill's own output stops at a user-confirmed, finalized Markdown file and its accompanying notes.
+
+This project is released under the [MIT License](LICENSE). See [CHANGELOG.md](CHANGELOG.md) for release history.

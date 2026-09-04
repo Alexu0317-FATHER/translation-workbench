@@ -14,6 +14,15 @@ All notable changes to Translation Workbench are recorded here.
 
 - `showcase/` and the validation that checked its HTML dependencies.
 
+### Documentation
+
+- Both READMEs were rewritten around what the workflow is for: the AI supplies
+  the reasoning behind a rendering, not just the rendering, so that a translator
+  whose command of the source language is uneven still keeps every substantive
+  decision. Added a worked example from chapter 1, a stage table of what the
+  person and the AI each do, an example screenshot, and links to the published
+  bilingual chapters.
+
 ## [0.1.1] - 2026-09-04
 
 ### Added
