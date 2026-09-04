@@ -18,8 +18,6 @@ SKILL_FILE = SKILL / "SKILL.md"
 REQUIRED = (
     "../../LICENSE",
     "../../README.zh.md",
-    "../../showcase/index.html",
-    "../../showcase/NOTICE.md",
     "SKILL.md",
     "agents/openai.yaml",
     "references/project-initialization.md",
@@ -125,32 +123,6 @@ def validate_json(errors: list[str]) -> None:
             errors.append(f"Invalid JSON in {path.relative_to(ROOT)}: {exc}")
 
 
-def validate_showcase_dependencies(errors: list[str]) -> None:
-    showcase = (ROOT / "showcase").resolve()
-    for page in showcase.rglob("*.html"):
-        text = page.read_text(encoding="utf-8")
-        for match in HTML_REFERENCE_RE.finditer(text):
-            value = html.unescape(match.group(1).strip())
-            parsed = urlsplit(value)
-            if parsed.scheme or parsed.netloc or value.startswith("#"):
-                continue
-            local_path = unquote(parsed.path)
-            if not local_path:
-                continue
-            resolved = (page.parent / local_path).resolve()
-            try:
-                resolved.relative_to(showcase)
-            except ValueError:
-                errors.append(
-                    f"Showcase dependency escapes showcase root in {page.relative_to(ROOT)}: {value}"
-                )
-                continue
-            if not resolved.is_file():
-                errors.append(
-                    f"Missing showcase dependency in {page.relative_to(ROOT)}: {value}"
-                )
-
-
 def validate_public_content(errors: list[str]) -> None:
     for path in text_files():
         text = path.read_text(encoding="utf-8")
@@ -196,7 +168,6 @@ def main() -> int:
         validate_frontmatter(errors)
     validate_links(errors)
     validate_json(errors)
-    validate_showcase_dependencies(errors)
     validate_public_content(errors)
     run_tests(errors)
     if errors:

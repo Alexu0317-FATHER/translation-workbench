@@ -106,13 +106,15 @@ User-supplied Word documents, Markdown files, spreadsheets, PDFs, and other mate
 
 Empty glossary, character, background, source, and style files are not created. They appear only when the user provides relevant material or the project produces its first durable entry.
 
-## Showcase
+## Example output
 
-[Browse the Vermintide fan-translation showcase](https://alexu0317-father.github.io/translation-workbench/showcase/) on GitHub Pages. The source files live under [`showcase/`](showcase/); opening the `.html` files there shows their source, not the rendered pages.
+![A bilingual chapter page produced by this workflow](docs/example-chapter.png)
 
-The showcase contains one index page, five translated bilingual chapter pages, and the local images those pages reference. It is included as a real example of the workflow's output and is not installed with the skill.
+Each chapter is rendered as a side-by-side bilingual page: numbered paragraphs, footnotes that link to the translator's notes and back, a theme that follows the system, and a single-column fallback on narrow screens.
 
-The original stories and images remain the property of their respective rights holders. The repository's MIT License does not grant rights to third-party material under `showcase/`; see [showcase/NOTICE.md](showcase/NOTICE.md).
+A complete project built with this workflow — a Simplified Chinese translation of *Franz Lohner's Chronicle* — lives in its own repository, [franz-lohners-chronicle-zh](https://github.com/Alexu0317-FATHER/franz-lohners-chronicle-zh), and reads at [https://alexu0317-father.github.io/franz-lohners-chronicle-zh/](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/). Keeping it separate leaves this repository generic and small.
+
+The screenshot shows fan-translated material owned by Fatshark, reproduced only to illustrate the output format.
 
 ## Canonical skill structure
 
