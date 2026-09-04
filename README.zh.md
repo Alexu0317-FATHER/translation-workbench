@@ -2,32 +2,33 @@
 
 [English](README.md) | 简体中文
 
-Translation Workbench 是一个 Agent Skill，用于运行结构化翻译项目，覆盖原文准备、翻译起草、独立审核和用户主导的合并定稿。
+这是一套适合项目级翻译的 Agent Skill：依靠AI 起草、审核、记录等流程，提炼你的翻译风格，最重要的是，即便译者的源语言没有那么好，也能在这套技能的帮助下写出高质量的翻译。
+
+![这套流程做出的中英对照页面](docs/example-chapter.png)
+
+[02章《森林中的国王和王后》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/02-king-and-queen/output/index.html)
 
 当前版本：`0.1.1`
 
-它适用于长文本或需要保持连续性的翻译工作：项目可以积累术语、人物或说话者信息、背景资料、起草笔记，并执行单独的审核。它不限于小说、特定语言组合或数字章节。
+## 功能特性
 
-## 功能范围
+- 让AI承担对源语言的理解。我认为译文的好坏取决于译者双语的水平，技能要求AI不仅仅提供翻译译文，而且给出翻译依据，以此来弥补译者源语言的掌握深度。
+- 让AI学习你的翻译风格，且持续优化，并在项目中长期保持一致性。
+- 这套技能来源于[我的个人兴趣翻译项目](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)，历时两周、迭代 54 次，流程跑通之后才固化成技能。
 
-本 skill 包含：
+## 一个例子
 
-1. 初始化新项目，或接入已有资料；
-2. 获取并核对原文；
-3. 准备术语和本次翻译需要的上下文；
-4. 完成整份译文初稿和起草笔记；
-5. 在不修改初稿的情况下进行独立审核；
-6. 由用户逐项决定并完成定稿。
+[第 01 章《布鲁亨多夫的老男爵》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/01-old-baron/output/index.html)由我手译，独立审核指出一处理解错误：
 
-它不包含发布、平台格式转换、Dashboard、统计分析或 subagent 调度。
+> **原文**　if there was an hour's worth of light in the sky before the storms closed in, you were doing well.
+>
+> **我的初稿**　如果在暴风雪来临前天空还有一小时的光亮就好了。
+>
+> **审核指出**　`you were doing well` 的落点是苦中作乐的庆幸——有这点光就算走运——不是初稿那种没能实现的惋惜，意思正好反了。判断依据是句式：英文这里是过去时的真实条件句，讲的是那个冬天确实时不时会有的光景；要表达「要是……就好了」，英文得用虚拟语气写成 `if there had been…, it would have been…`。上文刚说完牧师冻死在布道坛上，庆幸也比惋惜更接得上。
 
-内置的两个检查器只使用 Python 3 标准库。它们负责校验上下文交接和阶段边界，不负责判断文学质量。
+这类判断Google Translate/DeepL 不会提供。原句里每个词我都认识，结果它们在上下文里合起来我就不知道怎么翻译了。（引用的英文原句版权归 Fatshark 所有。）
 
-## 支持的运行端
-
-唯一的 skill 正本位于 `skills/translation-workbench/`，供 Codex 和 Claude Code 共同使用。
-
-## 安装
+## 安装指南
 
 推荐从 GitHub 安装：
 
@@ -35,106 +36,84 @@ Translation Workbench 是一个 Agent Skill，用于运行结构化翻译项目�
 npx skills add Alexu0317-FATHER/translation-workbench
 ```
 
-明确指定同时安装到 Codex 和 Claude Code：
+同时安装到 Codex 和 Claude Code：
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench -a codex -a claude-code
 ```
 
-以上命令默认安装到当前项目。如需其他作用范围或安装方式，请按安装器提示选择。
-
-也可以手动安装到项目：
-
-- Codex：`.agents/skills/translation-workbench/`
-- Claude Code：`.claude/skills/translation-workbench/`
-
-请把同一份完整 skill 目录安装或复制到对应位置，不要分别维护两套翻译规则。
-
-通过 skills CLI 管理的安装可以这样更新：
+也可以手动安装到项目：Codex 放在 `.agents/skills/translation-workbench/`，Claude Code 放在 `.claude/skills/translation-workbench/`。更新已安装的版本：
 
 ```bash
 npx skills update translation-workbench
 ```
 
-当问题只有少量明确选项时，skill 会优先使用当前运行端提供的结构化提问工具。Claude Code 可以使用 `AskUserQuestion`；Codex 在工具可用时可以使用 `request_user_input`。没有相应工具或问题需要开放式回答时，则使用普通对话。
-
-## 调用方式
-
-示例：
+调用示例：
 
 ```text
 使用 translation-workbench，根据这些文件建立一个翻译项目。
 ```
 
+Codex 里点名技能：
+
 ```text
-$translation-workbench 开始为“渡口”这一节准备原文。
+$translation-workbench 开始为"渡口"这一节准备原文。
 ```
+
+Claude Code 里用斜杠命令：
 
 ```text
 /translation-workbench 继续审核第 4 章。
 ```
 
-第一种写法依靠运行端根据 skill 名称和描述进行识别。Codex 通常使用 `$translation-workbench`，Claude Code 通常使用 `/translation-workbench`。
+## 使用流程
 
-## 推荐的 session 使用方式
+| 阶段 | 人需要做什么 | AI做什么 |
+|---|---|---|
+| 初始化 | 告诉AI这是新项目、接入已有材料，还是继续某个已命名的翻译单元 | 确认既有的项目 README（如果存在）或创建项目 README，向你确认既有目录结构 |
+| 材料准备 | 提供所有你可以提供的资料 | 核对原文完整与来源，逐个搜索既有术语，标出本单元的新词，建立相关文档 |
+| 翻译 | 1. 下达翻译指令；2. 审核AI提供的新增术语词汇；3. 等AI产出 | 向人类确认术语表、人物卡等信息，产出翻译初稿和起草笔记 |
+| 独立审核 | 下达独立审核指令，等AI产出 | 根据原文、术语表、人物卡、风格文档审核初稿，产出 `review-notes.md` |
+| **合并定稿** | 1. 审核译文；2. 针对 AI 给出的 review notes 给予答复；3. 告诉AI 翻译理由；4. 决定哪些结论值得沉淀进项目文档 | 1. 逐项确认用户意见，写入 review notes；2. 确认定稿译文，以及经用户确认的术语表／人物档案／风格文档更新；3. 提炼值得沉淀的内容交由用户裁决；4. 产出 markdown 文档 |
 
-建议每个主要阶段使用单独的 session：
+每个阶段开始前会检查前置条件是否齐备。材料没备齐、术语还没裁完、已有的审核笔记会被覆盖，流程都会停下来告诉你缺什么。
 
-```text
-原文准备 → 翻译 → 独立审核 → 合并定稿
-```
+## 让技能更好用的秘诀
 
-每个 session 开始时，说明项目、翻译单元和本次阶段。例如：
+1. 如果可以的话，提供几份你的翻译样章，可以帮助AI在翻译之前理解你的风格。
+2. 在**翻译流程**中，审核AI提交的术语表、人物卡时，思考哪些值得长期统一的写入术语表——那些只在单章成立的记录不要让AI写进术语表或人物卡。项目越往后，一份精炼的表格收益越大。
+3. 在**合并定稿**阶段，不要只告诉AI你的翻译结论，告诉AI你为什么这么想。 **你的思考过程是AI提炼译文风格最重要的依赖。**
+4. 每个阶段用单独的 session，这样能让各阶段上下文更干净。 目前仅有**独立审核**流程通常无需人工干预，可以使用subagent执行。
 
-```text
-使用 translation-workbench。阅读本项目的 README，执行第 4 章的翻译流程。
-```
-
-一个阶段结束时，skill 会说明生成了哪些文件，并给出在新 session 中开始下一阶段的简短提示。这只是建议，不是强制的 session 规则。没有实测过的模型和超长 session 策略可能产生不同结果。
-
-## 项目初始化
-
-Skill 支持三种起点：
-
-- 没有既有结构的新项目；
-- 已有原文或参考资料，但需要整理；
-- 已有翻译项目，并且需要保留当前目录结构。
-
-对于新项目，skill 会根据内置模板创建项目 `README.md`。该 README 是项目入口，记录语言组合、作品或翻译单元、文件作用、项目资料和流程链接。
-
-用户提供的 Word、Markdown、表格、PDF 或其他资料保持不变。当前运行端能够读取时，skill 会根据内置模板把相关内容整理成项目文档。只有资料冲突、无法可靠分类或涉及编辑取舍时才询问用户。
-
-初始化时不会创建空白 glossary、人物、背景、来源或文风文件。只有用户提供了对应资料，或者项目第一次产生了需要长期保留的内容时，才创建相应文件。
-
-## 示例成品
-
-![这套流程产出的双语章节页](docs/example-chapter.png)
-
-每一章都渲染成中英对照双栏页面：段落编号、可跳转并可返回的脚注、跟随系统的明暗主题，窄屏自动转单栏。
-
-用这套流程做的完整项目——《弗兰兹·洛纳的编年史》中文翻译——放在独立仓库 [franz-lohners-chronicle-zh](https://github.com/Alexu0317-FATHER/franz-lohners-chronicle-zh)，在线阅读见 [https://alexu0317-father.github.io/franz-lohners-chronicle-zh/](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)。分开存放是为了让本仓库保持通用和轻量。
-
-截图中的内容为 Fatshark 作品的同人翻译，此处仅用于展示成品版式。
-
-## Skill 正本结构
+## 跑完一章后的项目结构
 
 ```text
-skills/translation-workbench/
-├─ SKILL.md
-├─ agents/
-│  └─ openai.yaml
-├─ references/
-│  ├─ project-initialization.md
-│  ├─ sourcing.md
-│  ├─ translation.md
-│  ├─ independent-review.md
-│  └─ finalization.md
-├─ scripts/
-│  ├─ check_translation_context.py
-│  ├─ check_stage.py
-│  └─ test_*.py
-└─ assets/
-   └─ templates/
+你的翻译项目/
+├─ README.md                  # 项目入口：语言、翻译单元、文件角色
+├─ <某个翻译单元>/
+│  ├─ source.md                 # 原文工作副本（文件名由项目决定）
+│  ├─ sourcing-handoff.json     # 材料准备到翻译的交接内容
+│  ├─ <译文标题>.md              # 定稿译文
+│  ├─ drafting-notes.md         # 起草笔记
+│  └─ review-notes.md           # 审核笔记
+├─ glossary.md                 # 术语表
+├─ character-profiles.md       # 人物档案
+├─ translator-style.md         # 译者风格
+├─ background-notes.md         # 背景资料
+└─ sources.md                  # 来源清单
 ```
 
-版本记录见 [CHANGELOG.md](CHANGELOG.md)。本项目使用 [MIT License](LICENSE)。
+空文件不会预先建好。只有真的产生了对应内容，skill 才会创建这些文件。
+
+## 实测范围与限制
+
+- 目前只验证过一个语言对（英译中）、一类文本（连载小说）。欢迎用于其他题材、其他语言以及其他文体进行测试，反馈请提 [Issue](https://github.com/Alexu0317-FATHER/translation-workbench/issues)。
+- 翻译所使用的模型是 Opus 5 和 GPT-5.6 Sol。其他模型未进行测试。
+- 检查器只依赖 Python 标准库。
+- CI 在 Python 3.11 上验证。
+
+## 成品、来源与许可
+
+用这套流程做的完整项目——《弗兰兹·洛纳编年史》中文翻译——仓库在 [franz-lohners-chronicle-zh](https://github.com/Alexu0317-FATHER/franz-lohners-chronicle-zh)，在线阅读见 [https://alexu0317-father.github.io/franz-lohners-chronicle-zh/](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)。中英对照的网页由我另外的构建脚本生成，不是这个 skill 的产出；skill 到用户确认的定稿 Markdown 和一套笔记文件为止。
+
+本项目使用 [MIT License](LICENSE)。版本记录见 [CHANGELOG.md](CHANGELOG.md)。
