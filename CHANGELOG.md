@@ -4,6 +4,11 @@ All notable changes to Translation Workbench are recorded here.
 
 ## [Unreleased]
 
+### Added
+
+- `CONTRIBUTING.md`: how to report a problem, what a workflow change needs to
+  argue, and the checks a pull request has to pass.
+
 ### Changed
 
 - The bundled showcase was replaced by a single screenshot in the README. The
