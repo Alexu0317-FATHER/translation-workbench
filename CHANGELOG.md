@@ -2,6 +2,18 @@
 
 All notable changes to Translation Workbench are recorded here.
 
+## [0.1.1] - 2026-09-04
+
+### Added
+
+- Simplified Chinese README with bidirectional language links.
+- A standalone showcase containing the translated chapter index, five bilingual chapter pages, and their referenced local images.
+- Automated validation for local HTML links and image dependencies in the showcase.
+
+### Changed
+
+- Public-content validation now permits project-specific material only inside the explicitly separated showcase while keeping the installable skill generic.
+
 ## [0.1.0] - 2026-09-04
 
 ### Added

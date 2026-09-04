@@ -1,8 +1,10 @@
 # Translation Workbench
 
+English | [简体中文](README.zh.md)
+
 Translation Workbench is an Agent Skill for running a structured translation project from source preparation through drafting, independent review, and user-led finalization.
 
-Current version: `0.1.0`
+Current version: `0.1.1`
 
 It is designed for long-form or continuity-sensitive translation work that benefits from terminology, character or speaker context, background material, drafting notes, and a separate review pass. It is not limited to fiction, a particular language pair, or numbered chapters.
 
@@ -103,6 +105,14 @@ For new projects, the skill creates a project `README.md` from its bundled templ
 User-supplied Word documents, Markdown files, spreadsheets, PDFs, and other material remain unchanged. When the runtime can read them, the skill extracts relevant content into project documents using the bundled templates. It asks the user only when material conflicts, cannot be classified reliably, or requires an editorial choice.
 
 Empty glossary, character, background, source, and style files are not created. They appear only when the user provides relevant material or the project produces its first durable entry.
+
+## Showcase
+
+[Browse the Vermintide fan-translation showcase](showcase/index.html).
+
+The showcase contains one index page, five translated bilingual chapter pages, and the local images those pages reference. It is included as a real example of the workflow's output and is not installed with the skill.
+
+The original stories and images remain the property of their respective rights holders. The repository's MIT License does not grant rights to third-party material under `showcase/`; see [showcase/NOTICE.md](showcase/NOTICE.md).
 
 ## Canonical skill structure
 

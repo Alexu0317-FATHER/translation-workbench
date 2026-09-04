@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>布鲁亨多夫的老男爵 · The Old Baron of Bluchendorf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+  :root{
+    color-scheme:light dark;
+    --paper:#f2eade; --paper-raised:#fbf6ed; --paper-sunk:#eae0d0;
+    --ink:#2a2018; --ink-soft:#665847; --ink-faint:#9c8b73;
+    --rule:#dccfb8; --rule-soft:#e9dfcd;
+    --gold:#8f6c2c; --gold-soft:#b18e4a;
+    --hl:rgba(143,108,44,.075); --shade:rgba(70,52,28,.10);
+    --serif:"Source Serif 4",Georgia,"Iowan Old Style","Times New Roman",serif;
+    --cjk:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC","Source Han Sans SC",sans-serif;
+    /* 字体按字符逐个回退：拉丁字母命中衬线体，汉字落到后面的中文字体 */
+    --mix:"Source Serif 4",Georgia,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC","Source Han Sans SC",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#131009; --paper-raised:#1c1811; --paper-sunk:#0d0b06;
+      --ink:#dbcfba; --ink-soft:#9c8e78; --ink-faint:#6d6252;
+      --rule:#332b20; --rule-soft:#241f17;
+      --gold:#c99c4e; --gold-soft:#dbb066;
+      --hl:rgba(201,156,78,.075); --shade:rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#131009; --paper-raised:#1c1811; --paper-sunk:#0d0b06;
+    --ink:#dbcfba; --ink-soft:#9c8e78; --ink-faint:#6d6252;
+    --rule:#332b20; --rule-soft:#241f17;
+    --gold:#c99c4e; --gold-soft:#dbb066;
+    --hl:rgba(201,156,78,.075); --shade:rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--serif);
+    font-size:clamp(15.5px,.42vw + 14.2px,17.5px); line-height:1.75;
+    -webkit-text-size-adjust:100%;
+  }
+  img{max-width:100%; height:auto}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 clamp(18px,4vw,48px)}
+
+  /* ---------- 顶栏 ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb,var(--paper) 88%,transparent);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .bar{display:flex; align-items:center; justify-content:space-between; gap:1rem; height:46px}
+  .brand{
+    font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink-faint); text-decoration:none; white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis;
+  }
+  .brand:hover{color:var(--gold)}
+  .tools{display:flex; gap:.4rem; flex:none}
+  .tools button{
+    font:inherit; font-size:.75rem; font-family:var(--cjk);
+    padding:.28em .8em; border-radius:999px; cursor:pointer;
+    color:var(--ink-soft); background:transparent;
+    border:1px solid var(--rule); transition:.15s;
+  }
+  .tools button:hover{color:var(--gold); border-color:var(--gold-soft)}
+
+  /* ---------- 章首 ---------- */
+  header.chapter{text-align:center; padding:clamp(2.6rem,7vw,4.6rem) 0 1.6rem}
+  .series{
+    font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:1.4rem;
+  }
+  .title-en{
+    font-size:clamp(1.7rem,4.4vw,2.7rem); font-weight:600;
+    line-height:1.18; letter-spacing:-.01em; margin:0;
+  }
+  .title-zh{
+    font-family:var(--cjk); font-weight:500;
+    font-size:clamp(1rem,2.2vw,1.24rem); color:var(--ink-soft);
+    margin-top:.7rem; letter-spacing:.04em;
+  }
+  header.chapter::after{
+    content:""; display:block; width:44px; height:1px;
+    background:var(--gold-soft); opacity:.6; margin:1.8rem auto 0;
+  }
+
+  figure{margin:0}
+  /* --nw 是图片原生宽度，由生成脚本写入，用来防止小图被撑大 */
+  figure.illus{margin:0 auto 2.6rem; max-width:min(100%,var(--nw,100%))}
+  figure.illus img{width:100%; border-radius:2px; box-shadow:0 2px 18px var(--shade)}
+
+  /* ---------- 开场白 ---------- */
+  .intro{
+    margin:0 0 2.2rem; padding-bottom:1.6rem;
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .intro .col{color:var(--ink-soft); font-size:.92em}
+  .intro .col.en p{font-style:italic}
+
+  /* ---------- 双栏对照 ---------- */
+  .row{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:clamp(26px,3.6vw,54px);
+    position:relative; padding:.9rem 0 .9rem clamp(1.9rem,3.2vw,2.9rem);
+    border-radius:3px; transition:background .12s;
+    scroll-margin-top:70px;
+  }
+  main .row:hover{background:var(--hl)}
+  main .row:target{background:var(--hl); box-shadow:inset 3px 0 0 var(--gold-soft)}
+  .pn{
+    position:absolute; left:0; top:1.05rem;
+    width:clamp(1.3rem,2.2vw,2rem); text-align:right;
+    font-size:.7rem; font-variant-numeric:tabular-nums;
+    color:var(--ink-faint); text-decoration:none; opacity:.55; transition:.15s;
+  }
+  .row:hover .pn{opacity:1; color:var(--gold)}
+  .col p{margin:0 0 .78em}
+  .col p:last-child{margin-bottom:0}
+  .col.en{hyphens:auto}
+  .col.zh{
+    font-family:var(--mix); font-size:.93em; line-height:1.95;
+    text-align:justify; text-justify:inter-ideograph;
+  }
+  /* 中文没有斜体。原文的 em 混着引文、出处、强调三种用法，
+     统一加装饰必然在其中一种上出错，所以只去掉伪斜体，不另作区分。 */
+  .col.zh em,.notes em{font-style:normal}
+  main .row + .row{border-top:1px solid var(--rule-soft)}
+
+  .full{margin:1.8rem 0; text-align:center}
+  figure.story-img{display:inline-block; max-width:min(100%,560px,var(--nw,560px))}
+  figure.story-img img{width:100%; border-radius:2px}
+
+  /* ---------- 窄屏自动单栏 ---------- */
+  @media (max-width:820px){
+    .row{grid-template-columns:1fr !important; gap:.5rem}
+    .col.en{color:var(--ink-soft); font-size:.9em; line-height:1.7}
+    .col.zh{border-left:2px solid var(--rule); padding-left:1.05rem}
+    .brand{font-size:.62rem; letter-spacing:.1em}
+  }
+
+  /* ---------- 脚注 ---------- */
+  .fnmark{font-size:.62em; line-height:0; vertical-align:super}
+  .fnmark a{color:var(--gold); text-decoration:none; padding:0 .1em}
+  .fnmark a:hover{text-decoration:underline}
+  .fnback{
+    margin-left:.55em; font-size:.72em; color:var(--ink-faint);
+    text-decoration:none; vertical-align:middle;
+  }
+  .fnback:hover{color:var(--gold)}
+
+  /* ---------- 译者按 ---------- */
+  .notes{
+    margin:4rem auto 0; max-width:44rem;
+    padding-top:2rem; border-top:1px solid var(--rule);
+    font-family:var(--mix);
+  }
+  .notes-title{
+    font-size:.72rem; letter-spacing:.22em; font-weight:500;
+    color:var(--ink-faint); text-align:center; margin:0 0 2rem;
+  }
+  .notes .zh{font-size:.9em; line-height:1.95; color:var(--ink-soft)}
+  .notes p{margin:0 0 .9em}
+  .note-h,.note-h3{
+    font-family:var(--mix); color:var(--ink); font-weight:600;
+    scroll-margin-top:70px;
+  }
+  .note-h{font-size:1.05em; margin:2.2rem 0 .8rem}
+  .note-h3{font-size:.98em; margin:1.9rem 0 .7rem}
+  .notes .zh > :first-child{margin-top:0}
+  .notes [id]:target{
+    background:var(--hl); box-shadow:-.5rem 0 0 var(--hl),.5rem 0 0 var(--hl);
+    border-radius:2px;
+  }
+  .notes ol,.notes ul{margin:.4rem 0 .9em 1.4rem; padding:0}
+  .notes li{margin:0 0 .35em}
+  .note-hr{border:none; border-top:1px solid var(--rule-soft); margin:1.8rem 0}
+  /* 译者按的图横竖混杂，尺寸从 382 宽到 2268 都有。
+     横图统一到列宽、竖图统一到同一高度，两类各自看齐而不变形。 */
+  figure.note-img{margin:1.6rem auto; text-align:center}
+  figure.note-img img{border-radius:3px; box-shadow:0 1px 10px var(--shade)}
+  /* 容许最多 1.12 倍放大，好让宽度只差几个百分点的图也能对齐列宽 */
+  figure.note-img.landscape{max-width:min(100%,calc(var(--nw,100%) * 1.12))}
+  figure.note-img.landscape img{width:100%}
+  figure.note-img.portrait img{max-height:480px; width:auto; max-width:100%}
+  blockquote{
+    margin:1rem 0; padding:.2rem 0 .2rem 1.1rem;
+    border-left:2px solid var(--gold-soft); color:var(--ink-soft);
+  }
+  a{color:var(--gold)}
+
+  footer.foot{
+    margin:4rem 0 0; padding:1.6rem 0 3rem;
+    border-top:1px solid var(--rule-soft);
+    font-family:var(--cjk); font-size:.72rem;
+    color:var(--ink-faint); text-align:center;
+  }
+  footer.foot a{color:var(--ink-faint); text-decoration:none}
+  footer.foot a:hover{color:var(--gold)}
+
+  @media print{
+    .topbar,footer.foot{display:none}
+    body{background:#fff; color:#000; font-size:10.5pt}
+    .row{break-inside:avoid}
+  }
+</style>
+<script>
+  (function(){
+    try{
+      var t=localStorage.getItem("flc-theme");
+      if(t){document.documentElement.setAttribute("data-theme",t);}
+    }catch(e){}
+  })();
+</script>
+</head>
+<body>
+  <div class="topbar"><div class="wrap bar">
+    <a class="brand" href="../../../../index.html">Franz Lohner's Chronicle · 目录</a>
+    <div class="tools">
+      <button id="btn-theme" type="button">夜间</button>
+    </div>
+  </div></div>
+
+  <div class="wrap">
+    <header class="chapter">
+      <div class="series">Franz Lohner's Chronicle · 弗兰兹·洛纳的编年史</div>
+      <h1 class="title-en">The Old Baron of Bluchendorf</h1>
+      <div class="title-zh">布鲁亨多夫的老男爵</div>
+    </header>
+    <figure class="illus landscape" style="--nw:1000px"><img src="../assets/the-old-baron-of-bluchendorf.webp" alt="" width="1000" height="563" loading="lazy" decoding="async"></figure>
+    <section class="intro"><div class="row"><div class="col en" lang="en"><p><em>An absent-minded man of mysteries, Franz Lohner relies on his bulging journal to keep track of occurrences, intrigues and arguments around Taal's Horn Keep. Sometimes his notes are even useful, believe it or not. The Franz Lohner Chronicles are extracts from that journal.</em></p></div><div class="col zh" lang="zh-CN"><p><em>神秘且健忘的弗兰兹·洛纳，靠着他那本鼓鼓囊囊的日记来记录塔尔之角周围发生的事情、阴谋和争论。信不信由你，有时他的笔记还真有点用。《弗兰兹·洛纳编年史》就是摘自这本日记的内容。</em></p></div></div></section>
+    <main>
+    <div class="row" id="p1"><a class="pn" href="#p1">1</a><div class="col en" lang="en"><p>Well, the nights are drawing in, and the days are sure as stone getting colder. Why, I’ve had to send some of the lads down the mountain to gather more timber for the watchfires to save them icing right to the ground. Much to my surprise, Saltzpyre went with ‘em. Then again, I suppose if anyone has an eye for good kindling, it’s a witch hunter.</p></div><div class="col zh" lang="zh-CN"><p>夜是越拖越长，天也一天冷过一天。这不，我只好打发几个弟兄下山多弄些柴，把守夜的火堆烧旺点，省得大伙儿原地冻成冰雕，没想到萨尔茨皮雷也跟着去了。转念一想，要说谁能一眼就挑中引火的好柴，那还真得是咱这位独眼猎巫人。</p></div></div>
+<div class="row" id="p2"><a class="pn" href="#p2">2</a><div class="col en" lang="en"><p>Puts me in mind of a time from my mercenary days, back over in Bluchendorf. Coldest winter on record. Priest froze to his pulpit, and if there was an hour’s worth of light in the sky before the storms closed in, you were doing well. On top of that, we started getting reports of ghastly spirits on the road, attacking those few travellers who dared brave the weather. No laughing matter, because food was running short and the village was reliant on caravans from outside.</p></div><div class="col zh" lang="zh-CN"><p>这让我想起了我当佣兵时的一段往事。那是布鲁亨多夫有史以来最冷的冬天，冷得牧师直接冻死在布道坛上；暴风雪来临前，天上能有个把钟头的光亮，就算是难得的好光景了。</p><p>更要命的是，我们开始收到报告说路上有幽灵攻击那些为数不多敢于在这种天气出门的旅行者。不开玩笑，因为食物短缺，村子里的人都依赖外面的商队。</p></div></div>
+<div class="row" id="p3"><a class="pn" href="#p3">3</a><div class="col en" lang="en"><p>Luckily for them, me and some of the lads were up for a bit of ghost hunting. Not gladly, mind. I know plenty of folk think otherworldly spirits are just stuff and nonsense, but when you see the state of Sylvania you look at things a bit different. Some of the stories came complete with reports of bodies drained of blood and left hanging in the trees – one survivor even came raving a tale about the ‘Old Baron of Bluchendorf’ and his terrible, bloody fangs. So it seemed we had the choice of starving to death or becoming something else’s lunch.</p></div><div class="col zh" lang="zh-CN"><p>算他们走运吧，我打算带一些弟兄去会会那帮幽灵，别以为我乐意去。很多人认为鬼神之说纯属扯淡，那帮人是没见过希尔瓦尼亚的状况，传闻里可说得有板有眼：那些被吸干血的尸体挂在树上，有个幸存者还嚷嚷着什么见到了“布鲁亨多夫的老男爵”和他那对血淋淋的恐怖獠牙。</p><p>所以，要么被饿死，要么被吃掉，你猜我们怎么选？</p></div></div>
+<div class="row" id="p4"><a class="pn" href="#p4">4</a><div class="col en" lang="en"><p>So me and Schepke, we took a group of folks went looking for whatever it was causing the mischief. Unfortunately, between the blizzard, the trees and what I can only describe as a really bloody poor sense of direction, we wandered in circles for six days, never once catching sight of our quarry.</p></div><div class="col zh" lang="zh-CN"><p>于是，我和谢普克带着弟兄们去找那些玩意儿。结果倒了血霉，我们穿过暴风雪，还有树树树树树树！再加上我只能称之为操蛋的方向感，我们兜了整整六天圈子，毛都没找到。</p></div></div>
+<div class="row" id="p5"><a class="pn" href="#p5">5</a><div class="col en" lang="en"><p>Pretty soon we were all jumpy and foul-tempered, and that only got worse when young Hans froze to death. Couple of the lads wanted to eat him – not like something else wasn’t gonna, I guess – but that sort of thing’s never sat well with me, so I gave ‘em a clout to knock some sense back into their heads.</p></div><div class="col zh" lang="zh-CN"><p>很快，我们都开始神经兮兮，脾气一点就着。尤其是小汉斯被冻死后就更糟了，有几个家伙竟然想吃他的尸体！并不是说那些玩意儿就不会吃小汉斯的尸体，但人吃人这种事老子受不了，所以我揍了他们一顿，好让他们理智一点。</p></div></div>
+<div class="row" id="p6"><a class="pn" href="#p6">6</a><div class="col en" lang="en"><p>Then, on the seventh day, we woke shivering and starving to find ourselves surrounded by what, at first, seemed to be the same ghastly apparitions we’d been seeking. And so they were, sort of. You see, our mystery assailants were nothing more than a bunch of deserters, dressed in pale rags coated with glowing shellfish juices to really sell the idea. The so-called ‘Old Baron’ was the exception. Dressed up in what he probably thought was the spitting image of a Sylvanian Count, though what self-respecting bloodsucker hangs about in a Hochland forest in a velvet suit – complete with flowing cape – I’ve no idea. Snags something terrible, it does. And did.</p></div><div class="col zh" lang="zh-CN"><p>到了第七天，当我们从颤抖和饥饿中醒来，发现自己被我们一直在寻找的那些“幽灵”包围了。至少看上去是那么回事：我们的神秘袭击者充其量也就是一群逃兵，他们披着的苍白色的破布，布上涂着发光的贝类汁液来装神弄鬼。</p><p>那个所谓的“老男爵”倒是“鹤立鸡群”——他把自己打扮成想象中希尔瓦尼亚吸血鬼伯爵的样子：一身天鹅绒外套，还披着一件飘逸的披风。问题是，有哪个自重的吸血鬼会穿成这样在霍克领的森林里溜达？指不定就挂在哪根东南枝上了，是的，也确实挂住了。</p></div></div>
+<div class="row" id="p7"><a class="pn" href="#p7">7</a><div class="col en" lang="en"><p>Seems this lot had come marching down out of Ostland, where they’d played this particular game to great effect on the Wolfenburg-Levudaldorf road. If folk think there’s a bunch of cut-throats on the prowl, well they send out the militia, don’t they? But if they think there’s something supernatural at work, they’re a bit less keen to take action, ain’t they? All that ‘blood-drained corpses’ bit was just another way to sell the myth, though I don’t imagine it mattered to the corpses themselves.</p></div><div class="col zh" lang="zh-CN"><p>这群人可能是从奥斯特领过来的，他们从沃尔夫堡到莱沃达多夫的路上一定没少玩这种把戏，而且成效卓著。</p><p>想想吧，如果人们认为有一群暴徒在四处游荡，那就会派出民兵，对吧？但如果他们认为有超自然的力量在起作用，他们就会怂……合理吧？至于那些“被吸干血的尸体”不过是装神弄鬼的另一种方式，至于尸体本身，我觉得无关紧要。</p></div></div>
+<div class="full"><figure class="story-img landscape" style="--nw:605px"><img src="../assets/Wolfenburg_Map.webp" alt="" width="605" height="262" loading="lazy" decoding="async"></figure></div>
+<div class="row" id="p8"><a class="pn" href="#p8">8</a><div class="col en" lang="en"><p>Anyway, we’d come out looking for ghosts, and found a bunch of aspirational ne’er do wells. Not normally a problem – though I didn’t have my magic sword in those days, we were still a capable bunch. When warm. And fed.</p></div><div class="col zh" lang="zh-CN"><p>总而言之，我们去找幽灵，却找到了一群“志存千里”的逃兵。这本来是手拿把掐的事儿。尽管那会儿我还没有魔法剑，但我们还是很能打。唔……要是当时能吃饱……还有穿暖的话。</p></div></div>
+<div class="row" id="p9"><a class="pn" href="#p9">9</a><div class="col en" lang="en"><p>As it was, we were lucky to get away. Plenty of us didn’t. The rest crawled back into Bluchendorf half-dead, and smarting for revenge. Happily, by the time I could hold a sword, a company of Hochlander huntsmen had arrived in the village. During the next lull in the storm, we went back out mob-handed with murder in our hearts.</p></div><div class="col zh" lang="zh-CN"><p>万幸的是，我们逃了出来，可不少弟兄没这个运气。我们半死不活地爬回布鲁亨多夫后，誓要为弟兄们复仇。好在等我重新握得住剑时，一队霍克领猎人也赶到了村里。趁暴风雪再次停歇，我们摇齐了人，嗷嗷地又杀了回去。</p></div></div>
+<div class="row" id="p10"><a class="pn" href="#p10">10</a><div class="col en" lang="en"><p>Only … we never found the deserters. Or rather, we did, but not quite how we wanted. As night fell, we found a whole mess of blood-drained bodies, hanging from the trees. Horrid little upside-down forest beneath the forest, the branches hung heavy with flesh too cold to rot. Our ‘ghosts’ done unto by unknown hands as they’d been doing unto others themselves.</p></div><div class="col zh" lang="zh-CN"><p>只是……我们没找到那帮逃兵。或者说我们找到了，却不是以我们想要的方式。</p><p>当夜幕降临时，我们来到一片林子，林子里挂满了被吸干血的干尸，他们被这鬼天气冻得梆硬，都没法腐烂，一根根悬在那儿像一片倒置的森林。我们的“幽灵”被无名之手如法炮制——死法正是他们对别人做的那样。</p></div></div>
+<div class="row" id="p11"><a class="pn" href="#p11">11</a><div class="col en" lang="en"><p>The so-called ‘Old Baron’ was with them. Right at the heart of the carnage, in fact, hanging from the branches of a twisted old yew, throat ripped open and that ridiculous cloak gone. Had a scrap of paper in his breast pocket, and on it a message written in a beautiful copperplate hand. I can still see it, clear as day.</p></div><div class="col zh" lang="zh-CN"><p>“老男爵”也在其中，就吊在这片惨状正中央的一棵歪脖子老紫杉树上。他的喉咙被撕开，那件可笑的斗篷也不见了。他胸前的口袋里塞着一张纸条，上面用漂亮的花体字写着一句话。直到今天，那行字依然历历在目：</p></div></div>
+<div class="full"><figure class="story-img landscape" style="--nw:2172px"><img src="../assets/old-baron-note.png" alt="" width="2172" height="724" loading="lazy" decoding="async"></figure></div>
+<div class="row" id="p12"><a class="pn" href="#p12">12</a><div class="col en" lang="en"><p>‘There are enough horrors in this world, without pretenders.’</p></div><div class="col zh" lang="zh-CN"><p>“世界已恐怖如斯，何须再故弄玄虚？”</p></div></div>
+<div class="row" id="p13"><a class="pn" href="#p13">13</a><div class="col en" lang="en"><p>I don’t know why I looked behind me at that moment, but I did. And there she was, standing framed against the trees, the Baron’s cloak wrapped tight about white dress, and a mocking finger pressed to bloody lips, urging me to silence. And then she was gone, leaving me croaking for help. No one else had caught a glimpse, or so they said.</p></div><div class="col zh" lang="zh-CN"><p>那一刻，我神差鬼使地看了眼身后，她就在那里，如同嵌在林木之间的阴影，男爵的斗篷紧紧地裹着她的白裙。她竖起一根手指，嘲弄地抵在血淋淋的唇上，示意我别出声。下一秒，她就不见了，只留下我嘶声力竭的呼救声，但弟兄们都坚称没看到什么女人。</p></div></div>
+<div class="row" id="p14"><a class="pn" href="#p14">14</a><div class="col en" lang="en"><p>Felt her eyes on me all the way back to Bluchendorf, I did.</p></div><div class="col zh" lang="zh-CN"><p>然而，在回布鲁亨多夫的路上，我觉得她一直在那儿盯着我，真的。</p></div></div>
+<div class="row" id="p15"><a class="pn" href="#p15">15</a><div class="col en" lang="en"><p>I wonder how Saltzpyre’s getting on?</p></div><div class="col zh" lang="zh-CN"><p>说到盯着，不晓得独具慧眼的萨尔茨皮雷那边怎么样了？</p></div></div>
+    </main>
+
+    <footer class="foot">
+      Franz Lohner's Chronicle &middot; 同人翻译，原文版权归 Fatshark 所有
+      &nbsp;|&nbsp; <a href="../../../../index.html">返回目录</a>
+    </footer>
+  </div>
+
+<script>
+  (function(){
+    var root=document.documentElement;
+    var btnTheme=document.getElementById("btn-theme");
+
+    function store(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+
+    function currentTheme(){
+      var set=root.getAttribute("data-theme");
+      if(set) return set;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+    }
+    function paintTheme(){
+      var dark=currentTheme()==="dark";
+      btnTheme.textContent=dark?"日间":"夜间";
+      btnTheme.setAttribute("aria-pressed",String(dark));
+    }
+
+    btnTheme.addEventListener("click",function(){
+      var next=currentTheme()==="dark"?"light":"dark";
+      root.setAttribute("data-theme",next);
+      store("flc-theme",next);
+      paintTheme();
+    });
+
+    paintTheme();
+  })();
+</script>
+</body></html>

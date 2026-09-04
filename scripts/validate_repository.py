@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
+import html
 import json
 import re
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -15,6 +17,9 @@ SKILL = ROOT / "skills" / "translation-workbench"
 SKILL_FILE = SKILL / "SKILL.md"
 REQUIRED = (
     "../../LICENSE",
+    "../../README.zh.md",
+    "../../showcase/index.html",
+    "../../showcase/NOTICE.md",
     "SKILL.md",
     "agents/openai.yaml",
     "references/project-initialization.md",
@@ -38,6 +43,7 @@ REQUIRED = (
 )
 
 MARKDOWN_LINK_RE = re.compile(r"\]\(([^)]+)\)")
+HTML_REFERENCE_RE = re.compile(r'(?i)(?:href|src)\s*=\s*["\']([^"\']+)["\']')
 FRONTMATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 PRIVATE_PATH_RE = re.compile(r"(?i)(?:^|[\s('`\"])[a-z]:\\")
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
@@ -54,7 +60,7 @@ LEGACY_TERMS = (
 
 
 def text_files() -> list[Path]:
-    allowed = {".md", ".py", ".yaml", ".yml", ".json", ".txt"}
+    allowed = {".md", ".py", ".yaml", ".yml", ".json", ".txt", ".html"}
     return [
         path
         for path in ROOT.rglob("*")
@@ -87,8 +93,8 @@ def validate_frontmatter(errors: list[str]) -> None:
         errors.append("SKILL.md name must be translation-workbench")
     if not description_match or not description_match.group(1).strip():
         errors.append("SKILL.md description must be non-empty")
-    if not version_match or version_match.group(1).strip() != "0.1.0":
-        errors.append("SKILL.md metadata.version must be 0.1.0")
+    if not version_match or version_match.group(1).strip() != "0.1.1":
+        errors.append("SKILL.md metadata.version must be 0.1.1")
     if not license_match or license_match.group(1).strip() != "MIT":
         errors.append("SKILL.md license must be MIT")
 
@@ -119,6 +125,32 @@ def validate_json(errors: list[str]) -> None:
             errors.append(f"Invalid JSON in {path.relative_to(ROOT)}: {exc}")
 
 
+def validate_showcase_dependencies(errors: list[str]) -> None:
+    showcase = (ROOT / "showcase").resolve()
+    for page in showcase.rglob("*.html"):
+        text = page.read_text(encoding="utf-8")
+        for match in HTML_REFERENCE_RE.finditer(text):
+            value = html.unescape(match.group(1).strip())
+            parsed = urlsplit(value)
+            if parsed.scheme or parsed.netloc or value.startswith("#"):
+                continue
+            local_path = unquote(parsed.path)
+            if not local_path:
+                continue
+            resolved = (page.parent / local_path).resolve()
+            try:
+                resolved.relative_to(showcase)
+            except ValueError:
+                errors.append(
+                    f"Showcase dependency escapes showcase root in {page.relative_to(ROOT)}: {value}"
+                )
+                continue
+            if not resolved.is_file():
+                errors.append(
+                    f"Missing showcase dependency in {page.relative_to(ROOT)}: {value}"
+                )
+
+
 def validate_public_content(errors: list[str]) -> None:
     for path in text_files():
         text = path.read_text(encoding="utf-8")
@@ -131,9 +163,10 @@ def validate_public_content(errors: list[str]) -> None:
             errors.append(f"Possible access token found in {label}")
         if UNFINISHED_RE.search(text):
             errors.append(f"Unfinished placeholder found in {label}")
-        for term in LEGACY_TERMS:
-            if term.casefold() in text.casefold():
-                errors.append(f"Legacy project term {term!r} found in {label}")
+        if SKILL in path.parents:
+            for term in LEGACY_TERMS:
+                if term.casefold() in text.casefold():
+                    errors.append(f"Legacy project term {term!r} found in {label}")
 
 
 def run_tests(errors: list[str]) -> None:
@@ -163,6 +196,7 @@ def main() -> int:
         validate_frontmatter(errors)
     validate_links(errors)
     validate_json(errors)
+    validate_showcase_dependencies(errors)
     validate_public_content(errors)
     run_tests(errors)
     if errors:
