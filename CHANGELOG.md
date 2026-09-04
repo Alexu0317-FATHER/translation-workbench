@@ -2,6 +2,18 @@
 
 All notable changes to Translation Workbench are recorded here.
 
+## [Unreleased]
+
+### Changed
+
+- The bundled showcase was replaced by a single screenshot in the README. The
+  translated chapters it demonstrated now live in their own repository,
+  franz-lohners-chronicle-zh, so this repository stays generic and small.
+
+### Removed
+
+- `showcase/` and the validation that checked its HTML dependencies.
+
 ## [0.1.1] - 2026-09-04
 
 ### Added

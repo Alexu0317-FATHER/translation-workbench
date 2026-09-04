@@ -108,11 +108,13 @@ Skill 支持三种起点：
 
 ## 示例成品
 
-[浏览 Vermintide 同人翻译展示](https://alexu0317-father.github.io/translation-workbench/showcase/)（GitHub Pages 渲染后的页面）。源文件在 [`showcase/`](showcase/) 目录下；在仓库里点开其中的 `.html` 看到的是源码，不是渲染后的页面。
+![这套流程产出的双语章节页](docs/example-chapter.png)
 
-展示目录包含一个章节索引、五篇已翻译的中英对照章节，以及页面实际引用的本地图片。它用于展示这套流程的真实产出，不会随 skill 一起安装。
+每一章都渲染成中英对照双栏页面：段落编号、可跳转并可返回的脚注、跟随系统的明暗主题，窄屏自动转单栏。
 
-原作文本和图片的权利仍归各自权利人所有。仓库的 MIT License 不授予 `showcase/` 下第三方素材的使用权；详见 [showcase/NOTICE.md](showcase/NOTICE.md)。
+用这套流程做的完整项目——《弗兰兹·洛纳的编年史》中文翻译——放在独立仓库 [franz-lohners-chronicle-zh](https://github.com/Alexu0317-FATHER/franz-lohners-chronicle-zh)，在线阅读见 [https://alexu0317-father.github.io/franz-lohners-chronicle-zh/](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)。分开存放是为了让本仓库保持通用和轻量。
+
+截图中的内容为 Fatshark 作品的同人翻译，此处仅用于展示成品版式。
 
 ## Skill 正本结构
 
