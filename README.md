@@ -30,19 +30,19 @@ Google Translate and DeepL will not give you that. Every word in the line was on
 
 ## Installation
 
-Recommended install from GitHub:
+Recommended install from GitHub. This installs into the current project, which is the default scope:
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench
 ```
 
-Install to both Codex and Claude Code:
+Add `-g` to install it for your user account instead, so that it is available in every project. Add `-a` to choose which agents it is installed to:
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench -a codex -a claude-code
 ```
 
-Manual installation also works: Codex at `.agents/skills/translation-workbench/`, Claude Code at `.claude/skills/translation-workbench/`. To update an existing installation:
+A project install puts the skill under `.agents/skills/translation-workbench/`, with each agent's own directory pointing at it, `.claude/skills/` in the case of Claude Code; `-g` does the same under your home directory. Manual installation also works: copy this repository's `skills/translation-workbench/` to `.agents/skills/` for Codex or `.claude/skills/` for Claude Code, prefixed with `~/` for a user-level install. To update an existing installation, where `-p` updates the project scope only and `-g` the global one:
 
 ```bash
 npx skills update translation-workbench

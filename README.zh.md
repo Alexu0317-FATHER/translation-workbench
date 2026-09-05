@@ -30,19 +30,19 @@
 
 ## 安装指南
 
-推荐从 GitHub 安装：
+推荐从 GitHub 安装。默认装到当前项目：
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench
 ```
 
-同时安装到 Codex 和 Claude Code：
+加 `-g` 改为装到用户账户下，这样每个项目都能用。加 `-a` 指定装到哪些 agent：
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench -a codex -a claude-code
 ```
 
-也可以手动安装到项目：Codex 放在 `.agents/skills/translation-workbench/`，Claude Code 放在 `.claude/skills/translation-workbench/`。更新已安装的版本：
+项目级安装会把技能放在 `.agents/skills/translation-workbench/`，再让各 agent 自己的目录指向它，Claude Code 就是 `.claude/skills/`；加 `-g` 则在你的用户主目录下同样来一遍。也可以手动安装：把本仓库的 `skills/translation-workbench/` 复制到 Codex 的 `.agents/skills/` 或 Claude Code 的 `.claude/skills/`，装到用户级就在路径前加 `~/`。更新已安装的版本，`-p` 只更新项目级，`-g` 只更新全局：
 
 ```bash
 npx skills update translation-workbench
