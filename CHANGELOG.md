@@ -27,6 +27,11 @@ All notable changes to Translation Workbench are recorded here.
   decision. Added a worked example from chapter 1, a stage table of what the
   person and the AI each do, an example screenshot, and links to the published
   bilingual chapters.
+- Both READMEs now state the installation scope. `npx skills add` installs into
+  the current project by default, and `-g` installs into the user account
+  instead; neither was mentioned before. The directories a project install
+  writes to and the scope flags for `npx skills update` are documented
+  alongside them.
 
 ## [0.1.1] - 2026-09-04
 
