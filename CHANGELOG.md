@@ -11,6 +11,11 @@ All notable changes to Translation Workbench are recorded here.
 
 ### Changed
 
+- `scripts/validate_repository.py` no longer hardcodes the version number. It
+  reads `metadata.version` out of `SKILL.md`, checks that it is a semantic
+  version, and then checks that both READMEs cite the same one. A release bump
+  now has a single source, and CI names whichever document was left behind
+  instead of only reporting that the number is wrong.
 - The bundled showcase was replaced by a single screenshot in the README. The
   translated chapters it demonstrated now live in their own repository,
   franz-lohners-chronicle-zh, so this repository stays generic and small.

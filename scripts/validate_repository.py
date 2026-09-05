@@ -47,6 +47,11 @@ PRIVATE_PATH_RE = re.compile(r"(?i)(?:^|[\s('`\"])[a-z]:\\")
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 TOKEN_RE = re.compile(r"\b(?:ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9_-]{20,})\b")
 UNFINISHED_RE = re.compile("(?i)\\[" + "TODO|\\b" + "FIX" + "ME\\b")
+SEMVER_RE = re.compile(r"\A\d+\.\d+\.\d+\Z")
+VERSION_CITATIONS = (
+    ("README.md", re.compile(r"(?m)^Current version: `([^`]+)`\s*$")),
+    ("README.zh.md", re.compile(r"(?m)^当前版本：`([^`]+)`\s*$")),
+)
 LEGACY_TERMS = (
     "Vermin" + "tide",
     "Fat" + "shark",
@@ -76,12 +81,12 @@ def validate_required(errors: list[str]) -> None:
             errors.append(f"Missing required file: {path.relative_to(ROOT)}")
 
 
-def validate_frontmatter(errors: list[str]) -> None:
+def validate_frontmatter(errors: list[str]) -> str | None:
     text = SKILL_FILE.read_text(encoding="utf-8")
     match = FRONTMATTER_RE.match(text)
     if not match:
         errors.append("SKILL.md must start with YAML frontmatter")
-        return
+        return None
     frontmatter = match.group(1)
     name_match = re.search(r"(?m)^name:\s*([^\n]+)$", frontmatter)
     description_match = re.search(r"(?m)^description:\s*([^\n]+)$", frontmatter)
@@ -91,10 +96,30 @@ def validate_frontmatter(errors: list[str]) -> None:
         errors.append("SKILL.md name must be translation-workbench")
     if not description_match or not description_match.group(1).strip():
         errors.append("SKILL.md description must be non-empty")
-    if not version_match or version_match.group(1).strip() != "0.1.1":
-        errors.append("SKILL.md metadata.version must be 0.1.1")
+    version = version_match.group(1).strip() if version_match else ""
+    if not SEMVER_RE.match(version):
+        errors.append("SKILL.md metadata.version must be a semantic version such as 0.1.1")
+        version = ""
     if not license_match or license_match.group(1).strip() != "MIT":
         errors.append("SKILL.md license must be MIT")
+    return version or None
+
+
+def validate_version_citations(errors: list[str], version: str) -> None:
+    """SKILL.md owns the version; every document repeating it has to agree."""
+    for name, pattern in VERSION_CITATIONS:
+        path = ROOT / name
+        if not path.is_file():
+            errors.append(f"Missing required file: {name}")
+            continue
+        match = pattern.search(path.read_text(encoding="utf-8"))
+        if not match:
+            errors.append(f"{name} does not state a current version")
+        elif match.group(1).strip() != version:
+            errors.append(
+                f"{name} states version {match.group(1).strip()}, "
+                f"but SKILL.md metadata.version is {version}"
+            )
 
 
 def validate_links(errors: list[str]) -> None:
@@ -164,8 +189,9 @@ def run_tests(errors: list[str]) -> None:
 def main() -> int:
     errors: list[str] = []
     validate_required(errors)
-    if SKILL_FILE.is_file():
-        validate_frontmatter(errors)
+    version = validate_frontmatter(errors) if SKILL_FILE.is_file() else None
+    if version:
+        validate_version_citations(errors, version)
     validate_links(errors)
     validate_json(errors)
     validate_public_content(errors)
