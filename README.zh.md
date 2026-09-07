@@ -4,9 +4,9 @@
 
 这是一套适合项目级翻译的 Agent Skill：依靠AI 起草、审核、记录等流程，提炼你的翻译风格，最重要的是，即便译者的源语言没有那么好，也能在这套技能的帮助下写出高质量的翻译。
 
-![这套流程做出的中英对照页面](docs/example-chapter.png)
+![一句话的 AI 初稿、审核建议与我的定稿译文](docs/draft-vs-final.jpg)
 
-[02章《森林中的国王和王后》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/02-king-and-queen/output/index.html)
+出自[第 04 章《低语号的下落》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html)，AI 起草，我定稿。
 
 当前版本：`0.1.1`
 

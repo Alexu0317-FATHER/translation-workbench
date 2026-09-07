@@ -4,9 +4,9 @@ English | [简体中文](README.zh.md)
 
 An Agent Skill for project-scale translation. The AI drafts, reviews, and keeps the records; the workflow distills your translation style; and above all, it lets you produce solid translations even when your command of the source language is not that strong.
 
-![A bilingual page produced by this workflow](docs/example-chapter.png)
+![The AI's draft of one line, the review it drew, and the wording I finalized](docs/draft-vs-final.jpg)
 
-[Chapter 02, The King and Queen i' the Woods](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/02-king-and-queen/output/index.html)
+The table is in Chinese, the target language of the project. Its columns, left to right: the source line, what the independent review flagged (summarized from its notes), the AI's draft, and the wording I finalized. From [Chapter 04, The Fate of Grungni's Whisper](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html).
 
 Current version: `0.1.1`
 

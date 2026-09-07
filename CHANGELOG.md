@@ -26,6 +26,12 @@ All notable changes to Translation Workbench are recorded here.
 
 ### Documentation
 
+- The README screenshot was replaced. It used to show a bilingual reading page,
+  which separate build scripts produce rather than this skill. In its place is a
+  table taken from chapter 4 of the same project: one source line, what the
+  independent review flagged, the AI's draft, and the finalized wording. That is
+  what the skill actually produces, and it shows why the person has to be in the
+  loop.
 - Both READMEs were rewritten around what the workflow is for: the AI supplies
   the reasoning behind a rendering, not just the rendering, so that a translator
   whose command of the source language is uneven still keeps every substantive
