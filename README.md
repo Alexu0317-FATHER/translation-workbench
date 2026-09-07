@@ -2,6 +2,8 @@
 
 English | [简体中文](README.zh.md)
 
+[![skills.sh](https://skills.sh/b/Alexu0317-FATHER/translation-workbench)](https://skills.sh/Alexu0317-FATHER/translation-workbench)
+
 An Agent Skill for project-scale translation. The AI drafts, reviews, and keeps the records; the workflow distills your translation style; and above all, it lets you produce solid translations even when your command of the source language is not that strong.
 
 ![The AI's draft of one line, the review it drew, and the wording I finalized](docs/draft-vs-final.jpg)

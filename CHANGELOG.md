@@ -26,6 +26,11 @@ All notable changes to Translation Workbench are recorded here.
 
 ### Documentation
 
+- Both READMEs now carry the skills.sh install-count badge, linking to the
+  skill's page in that directory. The directory ranks skills by installs
+  reported from the `skills` CLI, which is the same command the READMEs already
+  give for installation, so the badge is the one entry point a reader can use to
+  check the project's standing there.
 - The README screenshot was replaced. It used to show a bilingual reading page,
   which separate build scripts produce rather than this skill. In its place is a
   table taken from chapter 4 of the same project: one source line, what the

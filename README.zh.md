@@ -2,6 +2,8 @@
 
 [English](README.md) | 简体中文
 
+[![skills.sh](https://skills.sh/b/Alexu0317-FATHER/translation-workbench)](https://skills.sh/Alexu0317-FATHER/translation-workbench)
+
 这是一套适合项目级翻译的 Agent Skill：依靠AI 起草、审核、记录等流程，提炼你的翻译风格，最重要的是，即便译者的源语言没有那么好，也能在这套技能的帮助下写出高质量的翻译。
 
 ![一句话的 AI 初稿、审核建议与我的定稿译文](docs/draft-vs-final.jpg)
