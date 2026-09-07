@@ -1,0 +1,29 @@
+{
+  "name": "translation-workbench",
+  "owner": {
+    "name": "Alexu0317-FATHER",
+    "url": "https://github.com/Alexu0317-FATHER"
+  },
+  "metadata": {
+    "description": "The Translation Workbench skill, packaged for Claude Code's plugin system."
+  },
+  "plugins": [
+    {
+      "name": "translation-workbench",
+      "displayName": "Translation Workbench",
+      "source": "./",
+      "strict": false,
+      "description": "Initialize, organize, start, or continue a source-grounded, multi-stage translation project through source preparation, terminology alignment, drafting, independent review, and user-led finalization.",
+      "version": "0.1.2",
+      "license": "MIT",
+      "author": {
+        "name": "Alexu0317-FATHER",
+        "url": "https://github.com/Alexu0317-FATHER"
+      },
+      "homepage": "https://github.com/Alexu0317-FATHER/translation-workbench",
+      "repository": "https://github.com/Alexu0317-FATHER/translation-workbench",
+      "keywords": ["translation", "localization", "writing", "workflow"],
+      "skills": ["./skills/translation-workbench"]
+    }
+  ]
+}

@@ -10,7 +10,7 @@ An Agent Skill for project-scale translation. The AI drafts, reviews, and keeps 
 
 The table is in Chinese, the target language of the project. Its columns, left to right: the source line, what the independent review flagged (summarized from its notes), the AI's draft, and the wording I finalized. From [Chapter 04, The Fate of Grungni's Whisper](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html).
 
-Current version: `0.1.1`
+Current version: `0.1.2`
 
 ## Features
 
@@ -32,7 +32,31 @@ Google Translate and DeepL will not give you that. Every word in the line was on
 
 ## Installation
 
-Recommended install from GitHub. This installs into the current project, which is the default scope:
+### Ask your agent to install it
+
+Copy this line into the chat box in Claude Desktop or the Codex app, and send it:
+
+```text
+Install this skill for me, globally: https://github.com/Alexu0317-FATHER/translation-workbench
+```
+
+Replace `globally` with `for this project only` if you want the narrower scope. What the two words mean:
+
+- **This project only**: the skill works inside the folder you are working in right now. Open a different folder and it is not there.
+- **Globally**: the skill works no matter which folder you open.
+
+Your agent will read this repository and run the install for you.
+
+### As a Claude Code plugin
+
+```text
+/plugin marketplace add Alexu0317-FATHER/translation-workbench
+/plugin install translation-workbench@translation-workbench
+```
+
+### From skills.sh
+
+The route that covers Codex as well as Claude Code. This installs into the current project, which is the default scope:
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench
@@ -44,13 +68,19 @@ Add `-g` to install it for your user account instead, so that it is available in
 npx skills add Alexu0317-FATHER/translation-workbench -a codex -a claude-code
 ```
 
-A project install puts the skill under `.agents/skills/translation-workbench/`, with each agent's own directory pointing at it, `.claude/skills/` in the case of Claude Code; `-g` does the same under your home directory. Manual installation also works: copy this repository's `skills/translation-workbench/` to `.agents/skills/` for Codex or `.claude/skills/` for Claude Code, prefixed with `~/` for a user-level install. To update an existing installation, where `-p` updates the project scope only and `-g` the global one:
+A project install puts the skill under `.agents/skills/translation-workbench/`, with each agent's own directory pointing at it, `.claude/skills/` in the case of Claude Code; `-g` does the same under your home directory. To update an existing installation, where `-p` updates the project scope only and `-g` the global one:
 
 ```bash
 npx skills update translation-workbench
 ```
 
-Invocation examples:
+### Manual installation
+
+Copy this repository's `skills/translation-workbench/` to `.agents/skills/` for Codex or `.claude/skills/` for Claude Code, prefixed with `~/` for a user-level install.
+
+## Invocation
+
+Name the skill in plain language:
 
 ```text
 Use translation-workbench to set up a translation project from these files.
@@ -62,7 +92,7 @@ In Codex, name the skill directly:
 $translation-workbench Start source preparation for the section named "The Crossing".
 ```
 
-In Claude Code, use the slash command:
+In Claude Code or Claude Desktop, use the slash command:
 
 ```text
 /translation-workbench Continue the independent review of chapter 4.
