@@ -6,11 +6,22 @@ All notable changes to Translation Workbench are recorded here.
 
 ### Added
 
+- `.claude-plugin/marketplace.json`: the repository now publishes itself as a
+  Claude Code plugin marketplace holding one plugin, so
+  `/plugin marketplace add Alexu0317-FATHER/translation-workbench` works.
+  Before this the command failed with `Marketplace file not found`, because the
+  repository only ever carried a bare skill and Claude Code had nothing to read.
+  The skills.sh route is unchanged and remains the only one that covers Codex.
 - `CONTRIBUTING.md`: how to report a problem, what a workflow change needs to
   argue, and the checks a pull request has to pass.
 
 ### Changed
 
+- `scripts/validate_repository.py` also checks the marketplace manifest: that the
+  plugin entry exists, points at `./skills/translation-workbench`, and cites the
+  same version `SKILL.md` declares. The manifest is a third place the version
+  number appears, so CI holds it to the single source rather than letting it
+  drift.
 - `scripts/validate_repository.py` no longer hardcodes the version number. It
   reads `metadata.version` out of `SKILL.md`, checks that it is a semantic
   version, and then checks that both READMEs cite the same one. A release bump
@@ -26,6 +37,14 @@ All notable changes to Translation Workbench are recorded here.
 
 ### Documentation
 
+- Both READMEs rebuild the installation section into four labelled routes,
+  easiest first: asking your agent to do it from a chat box, the Claude Code
+  plugin, skills.sh, and copying the folder by hand. The chat-box route spells
+  out what project scope and global scope mean for someone who has not met the
+  distinction before.
+- Invocation is its own top-level section instead of a trailing paragraph under
+  one installation route, since which agent you invoke the skill from has
+  nothing to do with how you installed it.
 - Both READMEs now carry the skills.sh install-count badge, linking to the
   skill's page in that directory. The directory ranks skills by installs
   reported from the `skills` CLI, which is the same command the READMEs already

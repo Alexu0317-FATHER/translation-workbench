@@ -52,6 +52,9 @@ VERSION_CITATIONS = (
     ("README.md", re.compile(r"(?m)^Current version: `([^`]+)`\s*$")),
     ("README.zh.md", re.compile(r"(?m)^当前版本：`([^`]+)`\s*$")),
 )
+MARKETPLACE = ROOT / ".claude-plugin" / "marketplace.json"
+MARKETPLACE_PLUGIN = "translation-workbench"
+MARKETPLACE_SKILL = "./skills/translation-workbench"
 LEGACY_TERMS = (
     "Vermin" + "tide",
     "Fat" + "shark",
@@ -120,6 +123,40 @@ def validate_version_citations(errors: list[str], version: str) -> None:
                 f"{name} states version {match.group(1).strip()}, "
                 f"but SKILL.md metadata.version is {version}"
             )
+
+
+def validate_marketplace(errors: list[str], version: str) -> None:
+    """The plugin listing has to name the same skill and version the skill declares."""
+    if not MARKETPLACE.is_file():
+        errors.append("Missing required file: .claude-plugin/marketplace.json")
+        return
+    try:
+        manifest = json.loads(MARKETPLACE.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return  # validate_json already reports the parse failure
+    label = MARKETPLACE.relative_to(ROOT)
+    entries = manifest.get("plugins")
+    if not isinstance(entries, list) or not entries:
+        errors.append(f"{label} must list at least one plugin")
+        return
+    entry = next(
+        (item for item in entries if isinstance(item, dict) and item.get("name") == MARKETPLACE_PLUGIN),
+        None,
+    )
+    if entry is None:
+        errors.append(f"{label} has no plugin entry named {MARKETPLACE_PLUGIN}")
+        return
+    stated = str(entry.get("version", "")).strip()
+    if stated != version:
+        errors.append(
+            f"{label} states version {stated or '(none)'}, "
+            f"but SKILL.md metadata.version is {version}"
+        )
+    skills = entry.get("skills")
+    if isinstance(skills, str):
+        skills = [skills]
+    if not isinstance(skills, list) or MARKETPLACE_SKILL not in skills:
+        errors.append(f"{label} must point the plugin at {MARKETPLACE_SKILL}")
 
 
 def validate_links(errors: list[str]) -> None:
@@ -192,6 +229,7 @@ def main() -> int:
     version = validate_frontmatter(errors) if SKILL_FILE.is_file() else None
     if version:
         validate_version_citations(errors, version)
+        validate_marketplace(errors, version)
     validate_links(errors)
     validate_json(errors)
     validate_public_content(errors)

@@ -10,7 +10,7 @@
 
 出自[第 04 章《低语号的下落》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html)，AI 起草，我定稿。
 
-当前版本：`0.1.1`
+当前版本：`0.1.2`
 
 ## 功能特性
 
@@ -32,7 +32,31 @@
 
 ## 安装指南
 
-推荐从 GitHub 安装。默认装到当前项目：
+### 让 AI 帮你装
+
+把下面这句复制到 Claude Desktop 或 Codex app 的聊天栏，发出去：
+
+```text
+帮我安装这个技能，装到全局：https://github.com/Alexu0317-FATHER/translation-workbench
+```
+
+想只在当前项目用，把“装到全局”换成“只装到当前项目”。这两个说法的意思是：
+
+- **只装到当前项目**：技能只在你现在这个文件夹里能用，换个文件夹就没有了。
+- **装到全局**：不管你打开哪个文件夹，技能都能用。
+
+AI 会自己读这个仓库，然后动手装。
+
+### 作为 Claude Code 插件安装
+
+```text
+/plugin marketplace add Alexu0317-FATHER/translation-workbench
+/plugin install translation-workbench@translation-workbench
+```
+
+### 从 skills.sh 安装
+
+Codex 和 Claude Code 都能用的路径。默认装到当前项目：
 
 ```bash
 npx skills add Alexu0317-FATHER/translation-workbench
@@ -44,25 +68,31 @@ npx skills add Alexu0317-FATHER/translation-workbench
 npx skills add Alexu0317-FATHER/translation-workbench -a codex -a claude-code
 ```
 
-项目级安装会把技能放在 `.agents/skills/translation-workbench/`，再让各 agent 自己的目录指向它，Claude Code 就是 `.claude/skills/`；加 `-g` 则在你的用户主目录下同样来一遍。也可以手动安装：把本仓库的 `skills/translation-workbench/` 复制到 Codex 的 `.agents/skills/` 或 Claude Code 的 `.claude/skills/`，装到用户级就在路径前加 `~/`。更新已安装的版本，`-p` 只更新项目级，`-g` 只更新全局：
+项目级安装会把技能放在 `.agents/skills/translation-workbench/`，再让各 agent 自己的目录指向它，Claude Code 就是 `.claude/skills/`；加 `-g` 则在你的用户主目录下同样来一遍。更新已安装的版本，`-p` 只更新项目级，`-g` 只更新全局：
 
 ```bash
 npx skills update translation-workbench
 ```
 
-调用示例：
+### 手动安装
+
+把本仓库的 `skills/translation-workbench/` 复制到 Codex 的 `.agents/skills/` 或 Claude Code 的 `.claude/skills/`，装到用户级就在路径前加 `~/`。
+
+## 调用方式
+
+用自然语言带上技能名：
 
 ```text
 使用 translation-workbench，根据这些文件建立一个翻译项目。
 ```
 
-Codex 里点名技能：
+Codex 里直接点名技能：
 
 ```text
 $translation-workbench 开始为"渡口"这一节准备原文。
 ```
 
-Claude Code 里用斜杠命令：
+Claude Code 或 Claude Desktop 里用斜杠命令：
 
 ```text
 /translation-workbench 继续审核第 4 章。
