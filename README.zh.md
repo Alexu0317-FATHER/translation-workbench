@@ -8,7 +8,11 @@
 
 ![一句话的 AI 初稿、审核建议与我的定稿译文](docs/draft-vs-final.jpg)
 
-出自[第 04 章《低语号的下落》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html)，AI 起草，我定稿。
+出自[第 04 章《低语号的下落》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html)：审核指出 happen 在这里是北英格兰方言、意为 perhaps，初稿语气偏客气，我据此定稿。
+
+![一个译名从第 03 章进入术语表、在第 06 章被沿用](docs/glossary-reuse.jpg)
+
+[第 03 章《冬狼》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/03-the-wolves-of-winter/output/index.html)确认写进术语表的「尤里克」，到第 06 章换了会话，甚至翻译使用的 agent 从 Claude Code 换到 Codex，相关新词仍在它的基础上译出。
 
 当前版本：`0.1.2`
 

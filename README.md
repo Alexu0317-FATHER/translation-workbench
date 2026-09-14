@@ -6,9 +6,13 @@ English | [简体中文](README.zh.md)
 
 An Agent Skill for project-scale translation. The AI drafts, reviews, and keeps the records; the workflow distills your translation style; and above all, it lets you produce solid translations even when your command of the source language is not that strong.
 
-![The AI's draft of one line, the review it drew, and the wording I finalized](docs/draft-vs-final.jpg)
+![The AI's draft of one line, the review it drew, and the wording I finalized](docs/draft-vs-final-en.jpg)
 
-The table is in Chinese, the target language of the project. Its columns, left to right: the source line, what the independent review flagged (summarized from its notes), the AI's draft, and the wording I finalized. From [Chapter 04, The Fate of Grungni's Whisper](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html).
+From [Chapter 04, The Fate of Grungni's Whisper](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html): the review points out that happen is Northern English dialect for perhaps and that the draft sounds too polite, and I settled the final wording from there.
+
+![A rendering confirmed into the glossary in Chapter 03 and reused in Chapter 06](docs/glossary-reuse-en.jpg)
+
+尤里克, the rendering of Ulric confirmed into the glossary in [Chapter 03, The Wolves of Winter](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/03-the-wolves-of-winter/output/index.html), is what the related new terms in Chapter 06 build on, in a new session and even with the translating agent switched from Claude Code to Codex.
 
 Current version: `0.1.2`
 
