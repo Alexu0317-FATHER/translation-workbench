@@ -1,0 +1,12 @@
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
+
+title: Translation Workbench
+description: >-
+  Agent Skill for long-form translation in Claude Code and Codex: the AI drafts
+  and reviews, you approve every glossary entry and every final wording.
+
+exclude:
+  - skills/
+  - scripts/
