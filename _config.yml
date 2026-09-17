@@ -3,6 +3,7 @@ plugins:
   - jekyll-seo-tag
 
 title: Translation Workbench
+tagline: Agent Skill for long-form translation in Claude Code and Codex
 description: >-
   Agent Skill for long-form translation in Claude Code and Codex: the AI drafts
   and reviews, you approve every glossary entry and every final wording.
