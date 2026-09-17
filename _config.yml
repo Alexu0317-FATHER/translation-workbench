@@ -1,6 +1,10 @@
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
+
+url: https://alexu0317-father.github.io
+baseurl: /translation-workbench
 
 title: Translation Workbench
 tagline: Agent Skill for long-form translation in Claude Code and Codex
