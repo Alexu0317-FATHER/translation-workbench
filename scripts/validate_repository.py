@@ -14,6 +14,7 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 SKILL = ROOT / "skills" / "translation-workbench"
+DISTILLATION = ROOT / "skills" / "translation-distillation"
 SKILL_FILE = SKILL / "SKILL.md"
 REQUIRED = (
     "../../LICENSE",
@@ -23,8 +24,10 @@ REQUIRED = (
     "references/project-initialization.md",
     "references/sourcing.md",
     "references/translation.md",
-    "references/independent-review.md",
     "references/finalization.md",
+    "../translation-distillation/SKILL.md",
+    "../translation-distillation/agents/openai.yaml",
+    "../../commands/沉淀.md",
     "scripts/check_translation_context.py",
     "scripts/check_stage.py",
     "scripts/test_check_translation_context.py",
@@ -54,7 +57,7 @@ VERSION_CITATIONS = (
 )
 MARKETPLACE = ROOT / ".claude-plugin" / "marketplace.json"
 MARKETPLACE_PLUGIN = "translation-workbench"
-MARKETPLACE_SKILL = "./skills/translation-workbench"
+MARKETPLACE_SKILLS = {"./skills/translation-workbench", "./skills/translation-distillation"}
 LEGACY_TERMS = (
     "Vermin" + "tide",
     "Fat" + "shark",
@@ -155,8 +158,8 @@ def validate_marketplace(errors: list[str], version: str) -> None:
     skills = entry.get("skills")
     if isinstance(skills, str):
         skills = [skills]
-    if not isinstance(skills, list) or MARKETPLACE_SKILL not in skills:
-        errors.append(f"{label} must point the plugin at {MARKETPLACE_SKILL}")
+    if not isinstance(skills, list) or not MARKETPLACE_SKILLS.issubset(skills):
+        errors.append(f"{label} must point the plugin at both translation skills")
 
 
 def validate_links(errors: list[str]) -> None:
@@ -197,7 +200,7 @@ def validate_public_content(errors: list[str]) -> None:
             errors.append(f"Possible access token found in {label}")
         if UNFINISHED_RE.search(text):
             errors.append(f"Unfinished placeholder found in {label}")
-        if SKILL in path.parents:
+        if SKILL in path.parents or DISTILLATION in path.parents:
             for term in LEGACY_TERMS:
                 if term.casefold() in text.casefold():
                     errors.append(f"Legacy project term {term!r} found in {label}")

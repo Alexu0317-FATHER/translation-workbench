@@ -1,0 +1,4 @@
+interface:
+  display_name: "沉淀 / Translation Distillation"
+  short_description: "从已定稿翻译中归纳可复用规则"
+  default_prompt: "Use $translation-distillation to review completed translation units and update project references with my decisions."

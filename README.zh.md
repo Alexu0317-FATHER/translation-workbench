@@ -4,152 +4,151 @@
 
 [![skills.sh](https://skills.sh/b/Alexu0317-FATHER/translation-workbench)](https://skills.sh/Alexu0317-FATHER/translation-workbench)
 
-这是一套适合项目级翻译的 Agent Skill，Claude Code 和 Codex 都能用：依靠AI 起草、审核、记录等流程，提炼你的翻译风格，最重要的是，即便译者的源语言没有那么好，也能在这套技能的帮助下写出高质量的翻译。
+**跨越原文理解的隐形门槛，释放你地道的文字表达力。**
 
-![一句话的 AI 初稿、审核建议与我的定稿译文](docs/draft-vs-final.jpg)
+Translation Workbench 是一套适合项目级翻译的 Agent Skills，Claude Code 和 Codex 都能用。AI 帮你读懂原文、查找依据、起草译文，再把你在实际修改中积累的经验用于后续翻译。
 
-出自[第 04 章《低语号的下落》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/04-the-fate-of-grungnis-whisper/output/index.html)：审核指出 happen 在这里是北英格兰方言、意为 perhaps，初稿语气偏客气，我据此定稿。
+当前版本：`0.2.0`
 
-![一个译名从第 03 章进入术语表、在第 06 章被沿用](docs/glossary-reuse.jpg)
-
-[第 03 章《冬狼》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/03-the-wolves-of-winter/output/index.html)确认写进术语表的「尤里克」，到第 06 章换了会话，甚至翻译使用的 agent 从 Claude Code 换到 Codex，相关新词仍在它的基础上译出。
-
-当前版本：`0.1.2`
+**0.2.0 更新**：沉淀成为独立技能，从多章初稿、定稿和修改理由中提炼风格；起草笔记增加值得核对的原文与仍不顺的译文，帮助你更快进入讨论。[查看版本记录](CHANGELOG.md)
 
 ## 功能特性
 
-- 让AI承担对源语言的理解。我认为译文的好坏取决于译者双语的水平，技能要求AI不仅仅提供翻译译文，而且给出翻译依据，以此来弥补译者源语言的掌握深度。
-- 让AI学习你的翻译风格，且持续优化，并在项目中长期保持一致性。
-- 这套技能来源于[我的个人兴趣翻译项目](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)，历时两周、迭代 54 次，流程跑通之后才固化成技能。
+- **看清原文依据，而不只是拿到一版译文。** 拆解长难句、查证方言俚语与上下文语境。AI 提供客观的原文证据链，让你有底气去判断，而不是被动接受一版文字。
+- **把你的改稿理由，炼成可复用的『译者风格』。** 独立的沉淀技能从你的实际修改和理由中归纳共同规律，更新风格指南与角色档案，让后续初稿越来越懂你的偏好。
+- **跨章节、跨会话维持项目记忆。** 术语、人物资料和已确认的写法随项目保存，换章节、换会话，也能接着已有的判断往下做。
+- **懂协作、不越界的反馈分寸。** 原文与术语是严肃依据，初稿与笔记仅供参考。让 AI 成为有分寸的翻译助手，而不是固执己见的辩手。
 
-## 一个例子
+## 从实际翻译中走来
 
-[第 01 章《布鲁亨多夫的老男爵》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/01-old-baron/output/index.html)由我手译，独立审核指出一处理解错误：
+这套技能源于我持续更新的[《弗兰兹·洛纳编年史》中译项目](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)。技能并不提供“一键译文”的功能，提供的是如下帮助：
 
-> **原文**　if there was an hour's worth of light in the sky before the storms closed in, you were doing well.
->
-> **我的初稿**　如果在暴风雪来临前天空还有一小时的光亮就好了。
->
-> **审核指出**　`you were doing well` 的落点是苦中作乐的庆幸——有这点光就算走运——不是初稿那种没能实现的惋惜，意思正好反了。判断依据是句式：英文这里是过去时的真实条件句，讲的是那个冬天确实时不时会有的光景；要表达「要是……就好了」，英文得用虚拟语气写成 `if there had been…, it would have been…`。上文刚说完牧师冻死在布道坛上，庆幸也比惋惜更接得上。
+![一句话的 AI 初稿、早期审核建议与我的定稿译文](docs/draft-vs-final.jpg)
 
-这类判断Google Translate/DeepL 不会提供。原句里每个词我都认识，结果它们在上下文里合起来我就不知道怎么翻译了。（引用的英文原句版权归 Fatshark 所有。）
+在[《低语号的下落》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/08-the-fate-of-grungnis-whisper/output/index.html) 的翻译中，AI 负责拆解俚语方言与句式依据，我在定稿环节赋予它地道的中文风味。
 
-## 安装指南
+![一个确认过的译名，在后续章节和新会话中继续使用](docs/glossary-reuse.png)
 
-### 让 AI 帮你装
+在第七章[《冬狼》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/07-the-wolves-of-winter/output/index.html)中确认的术语，到了第11章[《永恒之焰》](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/franz-lohners-chronicle/chapters/10-the-eternal-flame/output/index.html)，即使换了会话、从 Claude Code 换到 Codex，相关新词仍沿用这个译名。
 
-把下面这句复制到 Claude Desktop 或 Codex app 的聊天栏，发出去：
+## 如何使用技能
+
+### 流程表
+
+| 阶段 | 你做什么 | AI 做什么 |
+|---|---|---|
+| 初始化 | 提供材料，说明想从哪里开始 | 读取或建立项目入口，沿用可用的目录结构 |
+| 材料准备 | 提供原文和已有参考资料 | 核对来源与完整性，检索术语，整理待确认的新词和所需资料 |
+| 翻译 | 决定待确认的新词译法 | 产出初稿和起草笔记，保存一份初稿副本 |
+| 定稿 | 逐段讨论译文，决定措辞并说明理由 | 展示原文和译文，记录决定，统一应用修改，再核对最终文件 |
+| 沉淀（独立技能） | 决定AI的哪些提炼融入译者风格 | 读取过往的资料，并跟用户详细确认翻译时的想法，从而提炼出值得沉淀的翻译风格 |
+
+### 从第一句话开始
+
+你可以直接把原文、文件路径或链接交给 AI，说明源语言、目标语言，以及想从哪一章或哪一节开始。有术语表、人物资料或过去的译文，就一并告诉它；没有也可以先开始，AI 会检查现有材料，只追问真正缺少的信息。
+
+新项目可以这样说：
+
+> 使用 translation-workbench。我想把《作品名》从〔源语言〕译成〔目标语言〕，原文在〔文件或链接〕。请从〔章节或段落〕开始，先看看材料并帮我建立项目。
+
+已有项目继续做时，告诉 AI 项目位置、翻译单元和这次要做的事：
+
+> 使用 translation-workbench。请读取〔项目目录〕的 README 和〔翻译单元〕现有文件，继续材料准备／翻译／定稿。
+
+之后每次换会话，沿用这句的说法即可；AI 会从项目文件接续工作，不要求你记住上一轮对话里的细节。
+
+### 或者通过命令调用
+
+| 用途 | Codex | Claude Code（直接安装技能） |
+|---|---|---|
+| 准备原文、翻译或逐段定稿 | `$translation-workbench` | `/translation-workbench` |
+| 从已完成的多个单元中沉淀经验 | `$translation-distillation` | `/translation-distillation` |
+
+例如：`$translation-workbench 与我逐段定稿第 4 章。` 或 `$translation-distillation 从我指定的几章中提炼译者风格。`
+
+通过 Claude 插件安装时，完整入口分别是 `/translation-workbench:translation-workbench` 和 `/translation-workbench:translation-distillation`。
+
+Codex 的沉淀技能在列表中显示为“沉淀 / Translation Distillation”。
+
+### 两份工作记录
+
+**起草笔记：** 在翻译阶段由 AI 生成，写下它为什么这么翻，以及翻译中遇到的问题。你不必事先通读；定稿时 AI 会按段带出相关内容。
+
+**定稿记录：** 在定稿阶段产生，记录你的决定和理由。
+
+## 让技能更好用的秘诀
+
+- **把你的地道表达用起来：** 读着别扭，就指出哪里卡住、你想怎么说。原文理解和写作是两种能力；AI不会创造，只有你才能构建译文的灵魂。
+- **尽量说出修改理由：** “这样更好”留下的信息很少；“这两句单看没错，连起来却找不到主语”才有机会成为后续可复用的经验。
+- **积累多章后再沉淀：** 多份定稿记录能帮助区分偶然的措辞选择和反复出现的问题。术语、事实、人物声音和通用风格分别更新，已有条目也可以删改。
+- **每个阶段一个会话：** 各阶段建立独立的会话，会让AI的表现更好。
+- **尽管问AI：**材料缺失、术语未定或已有记录可能被覆盖时，技能会说明需要处理什么。
+
+## 安装
+
+把下面这句发给 Claude Code 或 Codex，让 AI 帮你装：
 
 ```text
-帮我安装这个技能，装到全局：https://github.com/Alexu0317-FATHER/translation-workbench
+帮我把这个仓库的 translation-workbench 和 translation-distillation 两个技能装到全局：https://github.com/Alexu0317-FATHER/translation-workbench
 ```
 
-想只在当前项目用，把“装到全局”换成“只装到当前项目”。这两个说法的意思是：
+“全局”表示在各个项目中都能用；只想在眼前这个文件夹里用，就改成“只装到当前项目”。
 
-- **只装到当前项目**：技能只在你现在这个文件夹里能用，换个文件夹就没有了。
-- **装到全局**：不管你打开哪个文件夹，技能都能用。
+<details>
+<summary>Claude Code 插件、skills.sh 与手动安装</summary>
 
-AI 会自己读这个仓库，然后动手装。
-
-### 作为 Claude Code 插件安装
+### Claude Code 插件
 
 ```text
 /plugin marketplace add Alexu0317-FATHER/translation-workbench
 /plugin install translation-workbench@translation-workbench
 ```
 
-### 从 skills.sh 安装
+### skills.sh（Codex 和 Claude Code）
 
-Codex 和 Claude Code 都能用的路径。默认装到当前项目：
-
-```bash
-npx skills add Alexu0317-FATHER/translation-workbench
-```
-
-加 `-g` 改为装到用户账户下，这样每个项目都能用。加 `-a` 指定装到哪些 agent：
+指定安装两个技能，默认装到当前项目：
 
 ```bash
-npx skills add Alexu0317-FATHER/translation-workbench -a codex -a claude-code
+npx skills add Alexu0317-FATHER/translation-workbench --skill translation-workbench --skill translation-distillation
 ```
 
-项目级安装会把技能放在 `.agents/skills/translation-workbench/`，再让各 agent 自己的目录指向它，Claude Code 就是 `.claude/skills/`；加 `-g` 则在你的用户主目录下同样来一遍。更新已安装的版本，`-p` 只更新项目级，`-g` 只更新全局：
+加 `-g` 安装到全局；加 `-a codex -a claude-code` 指定使用的 agent。更新这两个技能：
 
 ```bash
-npx skills update translation-workbench
+npx skills update translation-workbench translation-distillation
 ```
+
+更新时可用 `-p` 指定当前项目、`-g` 指定全局。更多选项见 [skills CLI 说明](https://github.com/vercel-labs/skills#readme)。
 
 ### 手动安装
 
-把本仓库的 `skills/translation-workbench/` 复制到 Codex 的 `.agents/skills/` 或 Claude Code 的 `.claude/skills/`，装到用户级就在路径前加 `~/`。
+将 `skills/` 中的 `translation-workbench/` 和 `translation-distillation/` 两个文件夹，复制到 Codex 的 `.agents/skills/` 或 Claude Code 的 `.claude/skills/`。安装到用户级就在目标路径前加 `~/`。
 
-## 调用方式
+</details>
 
-用自然语言带上技能名：
-
-```text
-使用 translation-workbench，根据这些文件建立一个翻译项目。
-```
-
-Codex 里直接点名技能：
-
-```text
-$translation-workbench 开始为"渡口"这一节准备原文。
-```
-
-Claude Code 或 Claude Desktop 里用斜杠命令：
-
-```text
-/translation-workbench 继续审核第 4 章。
-```
-
-## 使用流程
-
-| 阶段 | 人需要做什么 | AI做什么 |
-|---|---|---|
-| 初始化 | 告诉AI这是新项目、接入已有材料，还是继续某个已命名的翻译单元 | 确认既有的项目 README（如果存在）或创建项目 README，向你确认既有目录结构 |
-| 材料准备 | 提供所有你可以提供的资料 | 核对原文完整与来源，逐个搜索既有术语，标出本单元的新词，建立相关文档 |
-| 翻译 | 1. 下达翻译指令；2. 审核AI提供的新增术语词汇；3. 等AI产出 | 向人类确认术语表、人物卡等信息，产出翻译初稿和起草笔记 |
-| 独立审核 | 下达独立审核指令，等AI产出 | 根据原文、术语表、人物卡、风格文档审核初稿，产出 `review-notes.md` |
-| **合并定稿** | 1. 审核译文；2. 针对 AI 给出的 review notes 给予答复；3. 告诉AI 翻译理由；4. 决定哪些结论值得沉淀进项目文档 | 1. 逐项确认用户意见，写入 review notes；2. 确认定稿译文，以及经用户确认的术语表／人物档案／风格文档更新；3. 提炼值得沉淀的内容交由用户裁决；4. 产出 markdown 文档 |
-
-每个阶段开始前会检查前置条件是否齐备。材料没备齐、术语还没裁完、已有的审核笔记会被覆盖，流程都会停下来告诉你缺什么。
-
-## 让技能更好用的秘诀
-
-1. 如果可以的话，提供几份你的翻译样章，可以帮助AI在翻译之前理解你的风格。
-2. 在**翻译流程**中，审核AI提交的术语表、人物卡时，思考哪些值得长期统一的写入术语表——那些只在单章成立的记录不要让AI写进术语表或人物卡。项目越往后，一份精炼的表格收益越大。
-3. 在**合并定稿**阶段，不要只告诉AI你的翻译结论，告诉AI你为什么这么想。 **你的思考过程是AI提炼译文风格最重要的依赖。**
-4. 每个阶段用单独的 session，这样能让各阶段上下文更干净。 目前仅有**独立审核**流程通常无需人工干预，可以使用subagent执行。
-
-## 跑完一章后的项目结构
+## 跑完一个单元后
 
 ```text
 你的翻译项目/
-├─ README.md                  # 项目入口：语言、翻译单元、文件角色
+├─ README.md                  # 项目入口
 ├─ <某个翻译单元>/
-│  ├─ source.md                 # 原文工作副本（文件名由项目决定）
-│  ├─ sourcing-handoff.json     # 材料准备到翻译的交接内容
-│  ├─ <译文标题>.md              # 定稿译文
-│  ├─ drafting-notes.md         # 起草笔记
-│  └─ review-notes.md           # 审核笔记
-├─ glossary.md                 # 术语表
-├─ character-profiles.md       # 人物档案
-├─ translator-style.md         # 译者风格
-├─ background-notes.md         # 背景资料
-└─ sources.md                  # 来源清单
+│  ├─ source.md               # 原文工作副本
+│  ├─ sourcing-handoff.json   # 取材交接
+│  ├─ <译文标题>.md            # 当前译文，最终在此定稿
+│  ├─ initial-draft.md        # 保留的初稿，供后续对照
+│  ├─ drafting-notes.md       # 起草取舍与待讨论位置
+│  └─ 定稿记录.md             # 定稿决定与理由
+├─ glossary.md                # 术语表
+├─ character-profiles.md      # 人物档案
+├─ translator-style.md        # 译者风格
+├─ background-notes.md        # 背景资料
+└─ sources.md                 # 来源清单
 ```
 
-空文件不会预先建好。只有真的产生了对应内容，skill 才会创建这些文件。
+这是示例结构，已有项目沿用自己的路径。各文件在产生实际内容时才创建。
 
-## 实测范围与限制
+## 实测范围与许可
 
-- 目前只验证过一个语言对（英译中）、一类文本（连载小说）。欢迎用于其他题材、其他语言以及其他文体进行测试，反馈请提 [Issue](https://github.com/Alexu0317-FATHER/translation-workbench/issues)。
-- 翻译所使用的模型是 Opus 5 和 GPT-5.6 Sol。其他模型未进行测试。
-- 检查器只依赖 Python 标准库。
-- CI 在 Python 3.11 上验证。
+使用经验来自英译中连载小说项目中的 Claude Code 和 Codex。本次改版的翻译对照测试使用 Opus，新流程尚未在其他模型、语言对和文体上逐一复测。欢迎把实际使用情况写进 [Issue](https://github.com/Alexu0317-FATHER/translation-workbench/issues)。检查器只依赖 Python 标准库，CI 使用 Python 3.11。
 
-## 成品、来源与许可
-
-用这套流程做的完整项目——《弗兰兹·洛纳编年史》中文翻译——仓库在 [franz-lohners-chronicle-zh](https://github.com/Alexu0317-FATHER/franz-lohners-chronicle-zh)，在线阅读见 [https://alexu0317-father.github.io/franz-lohners-chronicle-zh/](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)。中英对照的网页由我另外的构建脚本生成，不是这个 skill 的产出；skill 到用户确认的定稿 Markdown 和一套笔记文件为止。
-
-本项目使用 [MIT License](LICENSE)。版本记录见 [CHANGELOG.md](CHANGELOG.md)。
+[原翻译项目的双语网页](https://alexu0317-father.github.io/franz-lohners-chronicle-zh/)由另外的构建脚本生成。本技能提供译文、工作记录和可复用的参考资料。源码采用 [MIT License](LICENSE)，版本记录见 [CHANGELOG.md](CHANGELOG.md)。

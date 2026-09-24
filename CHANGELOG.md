@@ -2,7 +2,18 @@
 
 All notable changes to Translation Workbench are recorded here.
 
-## [Unreleased]
+## [0.2.0] - 2026-09-25
+
+### Changed
+
+- Drafting notes now list actual translation choices, source passages for the user to inspect, and target-language passages that still read awkwardly. The translation stage checks subject carryover, broken causal links, and repetition across sentences where relevant to the target language.
+- Translation preserves a separate initial-draft copy. Finalization creates its own passage-by-passage decision record and no longer requires an independent-review stage or review checksum markers.
+
+### Added
+
+- Added a separately invoked `translation-distillation` skill for user-started cross-unit reference updates, with a Chinese Claude command shortcut. Publishing and dashboard work remain outside both skills.
+
+## [0.1.2] - 2026-09-18
 
 ### Added
 

@@ -1,6 +1,6 @@
 # Translation
 
-Use this stage to resolve pending terminology, produce a complete target-language draft, and record passage-level translation choices.
+Use this stage to resolve pending terminology, produce a complete target-language draft, and record both translation choices and passages that need the user's attention during finalization.
 
 ## Preflight
 
@@ -41,6 +41,7 @@ If new unresolved terms emerge during drafting, pause at a sensible boundary, ad
 
 ## Draft the complete translation
 
+- Read the complete source before drafting. Identify important turns and connections across passages before deciding how individual passages work.
 - Translate the complete source unit in source order.
 - Preserve meaning, uncertainty, voice, relationships, numbers, quotations, and meaningful structure.
 - Use confirmed glossary entries and applicable project guidance.
@@ -49,25 +50,37 @@ If new unresolved terms emerge during drafting, pause at a sensible boundary, ad
 - Preserve or deliberately rebuild wordplay, irony, register, and cross-passage effects when literal wording would lose them.
 - Follow the user's requested output format and the project's existing conventions.
 
+After drafting, read the complete target text again. Check relationships across sentences and paragraphs, not just the wording of each sentence. Where relevant to the target language, pay particular attention to these breaks:
+
+- a subject carried over from the preceding sentence that becomes unclear after a full stop;
+- a cause and result separated into sentences whose relationship the reader cannot follow;
+- a sentence that repeats the preceding sentence without adding anything.
+
+These are places to inspect in context. A matching surface pattern does not by itself prove the translation needs changing.
+
 ## Drafting notes
 
 Create drafting notes from `assets/templates/drafting-notes.md`.
 
-Record only choices that may need later review:
+Organize the notes into three parts:
 
-- ambiguity or competing readings;
-- wordplay, idiom, irony, or register;
-- non-literal choices made for voice or target-language effect;
-- relationships or forms of address that the target language must make explicit;
-- unresolved questions that remain after drafting.
+1. **Choices made.** Record ambiguity, wordplay, idiom, irony, voice, non-literal handling, and relationships or forms of address that the target language makes explicit. Describe this passage's actual choice, not a rule for future passages.
+2. **Source features to inspect.** List source passages whose syntax, idiom, delayed explanation, or other project-relevant feature may be difficult to carry into the target language. Include their locations and corresponding draft wording. List them without declaring that the translation did or did not succeed; the user will judge during finalization.
+3. **Places that still read awkwardly.** Read the entire draft and list each passage the drafter still finds unclear or hard to read, including relevant entries from the second part. Say where a reader may stumble. Do not silently repair or discard a concern merely because the draft is grammatical.
 
-Do not record routine literal translations or decisions already established by the glossary.
+Use stable source locations when the source format permits them. Do not record routine literal translations or decisions already established by the glossary. Record only work actually done; do not invent alternatives merely to reject them.
+
+## Preserve the initial draft
+
+When the draft and all three note sections are complete, save an unchanged copy before finalization. Unless the project already defines a snapshot path, use `initial-draft.md` beside the working translation and record its path in the drafting notes. If that path already exists, inspect it rather than overwriting it. A project may also retain a version-control revision, but the skill's stage check uses the saved copy so it works without Git.
 
 ## Completion conditions
 
 - the target-language draft contains the complete source unit;
 - confirmed terminology and relevant project guidance are applied;
 - drafting notes capture substantive choices and unresolved questions;
+- drafting notes contain the source-feature list and remaining awkward passages, even when either list is empty;
+- the initial draft can be retrieved without reconstructing it from later edits;
 - no pending term has been silently decided by the model.
 
-After completion, report the draft and drafting-notes paths and recommend starting independent review in a new session.
+After completion, report the draft, drafting notes, and initial-draft location; recommend starting user-led finalization in a new session.

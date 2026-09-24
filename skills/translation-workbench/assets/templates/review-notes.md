@@ -1,35 +1,23 @@
-# Review notes
+# Finalization notes
 
-Checked: {{ complete_source_read_complete_target_read_structure_and_full_comparison }}
+## Passage decisions
 
-<!-- translation-workbench:draft-sha256-before={{ draft_sha256_before_review }} -->
-<!-- translation-workbench:draft-sha256-after={{ draft_sha256_after_review }} -->
+### {{ source_location }} / {{ target_location }}
 
-## Title and structure
+Source: {{ source_excerpt }}
 
-| Issue | Evidence | Suggested handling |
-|---|---|---|
-| {{ issue }} | {{ source_target_or_project_rule }} | {{ suggestion }} |
+Draft: {{ draft_excerpt }}
 
-## {{ source_location }} / {{ target_location }}
+Final wording: {{ confirmed_wording_or_keep_draft }}
 
-> {{ source_excerpt }}
+User's reason: {{ exact_user_words_if_given }}
 
-Current translation: {{ target_excerpt }}
+Model analysis, if useful: {{ clearly_attributed_analysis }}
 
-| Issue | Evidence | Suggested handling |
-|---|---|---|
-| {{ issue }} | {{ source_target_or_project_rule }} | {{ suggestion }} |
+Status: {{ confirmed_or_pending }}
 
-**User decision:**
+## Finalization record
 
-**Status:** Pending confirmation
+Final translation confirmed by the user: {{ confirmation_and_date }}
 
-For an unambiguous mechanical correction, replace the decision field with:
-
-```text
-Handling: Direct mechanical correction
-Status: Pending correction
-```
-
-If no issue is found, record the scope checked and state that no issue was found.
+Project-defined handoff details, if any: {{ relevant_details }}

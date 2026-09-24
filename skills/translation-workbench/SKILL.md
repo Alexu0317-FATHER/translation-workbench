@@ -1,9 +1,9 @@
 ---
 name: translation-workbench
-description: Initialize, organize, start, or continue a source-grounded, multi-stage translation project through source preparation, terminology alignment, drafting, independent review, and user-led finalization. Use when the user explicitly names translation-workbench or asks to start, continue, or organize a structured translation workflow. Do not use for quick one-off translations, publishing, or post-publication formatting.
+description: Initialize or continue a source-grounded translation project through source preparation, terminology alignment, drafting, and user-led finalization. Use when the user names translation-workbench or asks for a structured translation workflow. Do not use for one-off translations, publishing, or post-publication formatting.
 license: MIT
 metadata:
-  version: "0.1.2"
+  version: "0.2.0"
 ---
 
 # Translation Workbench
@@ -36,14 +36,15 @@ For initialization, adoption of existing material, or recovery from an incomplet
 - **Explain or plan:** Explain the relevant part of the workflow without creating files unless the user asks.
 - **Prepare source material:** Read [sourcing.md](references/sourcing.md).
 - **Draft a translation:** Read [translation.md](references/translation.md).
-- **Independently review a draft:** Read [independent-review.md](references/independent-review.md).
 - **Merge decisions and finalize:** Read [finalization.md](references/finalization.md).
+
+When the user explicitly starts a cross-unit review of completed translations to improve project references, use the separate `translation-distillation` skill. Do not start it as part of a unit's finalization.
 
 If a requested stage lacks its required inputs, report the missing input and stop that stage. Do not silently reconstruct an earlier stage from guesses.
 
 ## Session boundaries
 
-- Recommend a separate session for each major stage because it limits context carryover and makes the independent review cleaner.
+- Recommend a separate session for each major stage because it limits context carryover.
 - Do not require, enforce, or claim to validate how the user organizes sessions.
 - Do not promise that a complete project will behave consistently when run in one long session or across untested models.
 - At the end of a completed stage, state what was produced and give a short suggested prompt for starting the next stage in a new session.
@@ -54,7 +55,7 @@ If a requested stage lacks its required inputs, report the missing input and sto
 Use the bundled read-only checkers instead of relying on a model assertion when their inputs are available:
 
 - `scripts/check_translation_context.py` validates a unit's JSON handoff, checks durable terminology against the glossary, verifies selected Markdown sections, and returns the exact context to read.
-- `scripts/check_stage.py` checks stage prerequisites, protects an existing review file, and verifies that an independently reviewed draft kept the same SHA-256.
+- `scripts/check_stage.py` checks stage prerequisites, protects an existing finalization record, and confirms that a new finalization begins from the saved initial draft.
 
 Resolve `<skill-dir>` from this skill's installed location. Resolve project files from the explicit project root or paths recorded in the project README.
 
@@ -68,14 +69,14 @@ Treat `status: ready` with an empty `warnings` array as a passed context gate. `
 ## Invariants
 
 - Keep source meaning, order, scope, and uncertainty intact. Do not add background information to the translation merely because it appears in reference material.
+- Distinguish source text and verified facts, user-confirmed choices, and AI-written work notes. An AI note records what was considered; it does not establish that the choice was correct.
 - Search existing project terminology before proposing a new durable term.
 - Add or change durable glossary, character, background, or translator-style guidance only after the user has approved the underlying judgment.
 - Keep chapter- or passage-specific choices in drafting or review notes instead of turning them into universal project rules.
-- During independent review, write only review notes. Do not modify the draft, glossary, or project references.
 - During finalization, apply non-mechanical changes only after recording the user's decision.
-- Never overwrite an existing review file or a user-supplied source file without explicit authorization.
+- Never overwrite an existing finalization record, initial-draft snapshot, or user-supplied source file without explicit authorization.
+- Preserve the initial draft before finalization changes it. Record where the snapshot can be retrieved for a later, user-started distillation.
 - Do not generate publication packages, platform-specific formatting, dashboards, or analytics.
-- Do not require or spawn subagents. The user may organize sessions however they choose.
 - Do not claim that behavior or translation quality has been validated for an untested model or language pair.
 
 ## Templates
@@ -90,4 +91,4 @@ Templates are under `assets/templates/`. Adapt their language and headings to th
 - `sources.md`: source and research inventory
 - `sourcing-handoff.json`: machine-readable source-preparation handoff
 - `drafting-notes.md`: passage-level translation choices
-- `review-notes.md`: independent-review findings and decisions
+- `review-notes.md`: paragraph-by-paragraph finalization decisions and reasons

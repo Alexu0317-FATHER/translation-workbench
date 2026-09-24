@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -14,10 +13,7 @@ from typing import Any
 from check_translation_context import check_context
 
 
-STAGES = ("translation", "independent-review", "review-complete", "finalization")
-REVIEW_HASH_RE = re.compile(
-    r"<!--\s*translation-workbench:draft-sha256-(before|after)=([0-9a-fA-F]{64})\s*-->"
-)
+STAGES = ("translation", "finalization")
 
 
 def resolve_path(project_root: Path, value: str | None) -> Path | None:
@@ -35,11 +31,6 @@ def sha256_file(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
-
-
-def review_hashes(path: Path) -> dict[str, str]:
-    text = path.read_text(encoding="utf-8")
-    return {position: value.casefold() for position, value in REVIEW_HASH_RE.findall(text)}
 
 
 def result_base(stage: str) -> dict[str, Any]:
@@ -82,9 +73,10 @@ def check_stage(
     project_root: Path | str,
     handoff: str | None = None,
     translation: str | None = None,
+    initial_draft: str | None = None,
     drafting_notes: str | None = None,
     review_notes: str | None = None,
-    expected_draft_sha256: str | None = None,
+    resume: bool = False,
 ) -> dict[str, Any]:
     root = Path(project_root).resolve()
     result = result_base(stage)
@@ -93,7 +85,7 @@ def check_stage(
         result["errors"].append(f"Unknown stage: {stage}")
         return result
 
-    if stage in {"translation", "independent-review", "finalization"}:
+    if stage in {"translation", "finalization"}:
         if not handoff:
             add_check(result, "context handoff", False, "No handoff path supplied")
         else:
@@ -127,67 +119,35 @@ def check_stage(
     if translation_path is not None:
         result["draft_sha256"] = sha256_file(translation_path)
 
-    if stage == "independent-review":
-        if review_notes:
-            review_path = resolve_path(root, review_notes)
-            assert review_path is not None
-            if review_path.exists():
-                add_check(
-                    result,
-                    "review output",
-                    False,
-                    f"Review file already exists and must not be overwritten: {review_path}",
-                )
-            else:
-                add_check(result, "review output", True, str(review_path))
-        else:
-            add_check(result, "review output", False, "No review-notes output path supplied")
-        return result
-
-    if stage == "review-complete":
-        require_file(result, root, review_notes, "review notes")
-        if not expected_draft_sha256:
-            add_check(
-                result,
-                "draft checksum",
-                False,
-                "No expected draft SHA-256 supplied",
-            )
-        elif translation_path is not None:
-            actual = result["draft_sha256"]
-            add_check(
-                result,
-                "draft checksum",
-                actual.casefold() == expected_draft_sha256.casefold(),
-                f"expected={expected_draft_sha256} actual={actual}",
-            )
-        return result
-
     require_file(result, root, drafting_notes, "drafting notes")
-    review_path = require_file(result, root, review_notes, "review notes")
-    if review_path is not None and translation_path is not None:
-        try:
-            hashes = review_hashes(review_path)
-        except UnicodeDecodeError:
-            result["status"] = "error"
-            result["errors"].append(f"Review notes are not valid UTF-8: {review_path}")
-            return result
-        before = hashes.get("before")
-        after = hashes.get("after")
-        actual = result["draft_sha256"]
-        if before is None or after is None:
+    snapshot_path = require_file(result, root, initial_draft, "initial draft snapshot")
+    if snapshot_path is not None and translation_path is not None:
+        distinct = snapshot_path != translation_path
+        add_check(result, "snapshot is separate", distinct, "Snapshot must be a separate file")
+        if distinct and not resume:
+            snapshot_hash = sha256_file(snapshot_path)
             add_check(
                 result,
-                "review draft checksum record",
-                False,
-                "Review notes do not contain both translation-workbench draft checksum markers",
+                "initial draft unchanged",
+                snapshot_hash == result["draft_sha256"],
+                f"snapshot={snapshot_hash} current={result['draft_sha256']}",
             )
+
+    if not review_notes:
+        add_check(result, "finalization record", False, "No review-notes path supplied")
+    else:
+        review_path = resolve_path(root, review_notes)
+        assert review_path is not None
+        if resume:
+            require_file(result, root, review_notes, "finalization record")
         else:
             add_check(
                 result,
-                "review draft checksum record",
-                before == after == actual,
-                f"before={before} after={after} current={actual}",
+                "finalization record",
+                not review_path.exists(),
+                f"Review notes already exist: {review_path}"
+                if review_path.exists()
+                else str(review_path),
             )
     return result
 
@@ -212,9 +172,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--project-root", default=".")
     parser.add_argument("--handoff")
     parser.add_argument("--translation")
+    parser.add_argument("--initial-draft")
     parser.add_argument("--drafting-notes")
     parser.add_argument("--review-notes")
-    parser.add_argument("--expected-draft-sha256")
+    parser.add_argument("--resume", action="store_true")
     return parser
 
 
@@ -227,9 +188,10 @@ def main(argv: list[str] | None = None) -> int:
             project_root=args.project_root,
             handoff=args.handoff,
             translation=args.translation,
+            initial_draft=args.initial_draft,
             drafting_notes=args.drafting_notes,
             review_notes=args.review_notes,
-            expected_draft_sha256=args.expected_draft_sha256,
+            resume=args.resume,
         )
     except Exception as exc:  # Keep the CLI JSON-only on unexpected failures.
         result = result_base(args.stage)

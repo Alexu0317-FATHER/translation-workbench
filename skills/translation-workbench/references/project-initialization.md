@@ -22,7 +22,7 @@ Determine, when not already clear:
 - desired final format, defaulting to Markdown only when the user has not specified one;
 - existing terminology, character, background, source, or style material.
 
-Use `assets/templates/project-readme.md` to create the project README. Create other project documents only when real content exists.
+Use `assets/templates/project-readme.md` to create the project README. Create other project documents only when real content exists. In particular, the handoff, drafting notes, initial-draft copy, and finalization notes are produced by their respective stages, not by initialization.
 
 ### Existing material without a workflow
 
@@ -60,12 +60,12 @@ The project README is the human- and agent-readable entry point. It should recor
 
 - project purpose and working languages;
 - works and translation-unit organization;
-- paths and roles of source, translation, and reference material;
-- workflow stages used by the project;
+- paths and roles of source, existing translation, stage artifacts, and reference material;
+- the project's source-preparation, translation, and user-led finalization stages, with user-started cross-unit distillation kept separate;
 - recommended session usage;
 - durable project constraints and known limitations.
 
-Use stable headings and direct file links. Do not duplicate the contents of reference documents in the README.
+Use stable headings and direct file links. Map only files that exist; add each unit's working translation, handoff, drafting notes, initial-draft copy, and finalization notes as they are produced. The initial-draft copy remains unchanged after translation. Do not duplicate the contents of reference documents in the README.
 
 Do not add a separate machine-readable project manifest unless a concrete deterministic script later requires one.
 

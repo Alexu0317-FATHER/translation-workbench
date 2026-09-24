@@ -20,9 +20,8 @@
 | Role | Path | Notes |
 |---|---|---|
 | Source material | `{{ source_path }}` | {{ source_note }} |
-| Translation | `{{ translation_path }}` | {{ translation_note }} |
 
-Add rows for real project documents only. Do not list files that do not exist.
+Add a row for the working translation when it exists. As each unit progresses, record the actual paths of its source-preparation handoff, drafting notes, preserved initial draft, and finalization notes. The working translation is the file being edited; the initial draft is its unchanged copy from before finalization. Drafting notes record the AI's work, while finalization notes record the user's decisions and stated reasons. Do not list or create files merely to fill this map.
 
 ## Project references
 
@@ -36,9 +35,9 @@ Link only the reference documents that currently exist, such as:
 
 ## Translation workflow
 
-Source preparation → Translation → Independent review → Finalization
+Source preparation → Translation → User-led finalization
 
-Use the detailed stage instructions supplied by Translation Workbench.
+Use the detailed stage instructions supplied by Translation Workbench. Cross-unit distillation uses the separate `translation-distillation` skill only when the user starts it; it is not the next stage after each unit.
 
 ## Recommended session usage
 

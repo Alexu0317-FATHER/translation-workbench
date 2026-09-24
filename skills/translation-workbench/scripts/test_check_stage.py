@@ -1,4 +1,3 @@
-import hashlib
 import json
 import subprocess
 import sys
@@ -16,6 +15,9 @@ class StageCheckerTests(unittest.TestCase):
         (self.root / "source.md").write_text("# Source\n\nText.\n", encoding="utf-8")
         (self.root / "translation.md").write_text(
             "# Translation\n\n译文。\n", encoding="utf-8"
+        )
+        (self.root / "initial-draft.md").write_bytes(
+            (self.root / "translation.md").read_bytes()
         )
         (self.root / "drafting-notes.md").write_text(
             "# Drafting notes\n\nNo open issues.\n", encoding="utf-8"
@@ -44,107 +46,61 @@ class StageCheckerTests(unittest.TestCase):
         }
         self.handoff_path.write_text(json.dumps(data), encoding="utf-8")
 
+    def finalization(self, **overrides):
+        args = {
+            "handoff": "handoff.json",
+            "translation": "translation.md",
+            "initial_draft": "initial-draft.md",
+            "drafting_notes": "drafting-notes.md",
+            "review_notes": "review-notes.md",
+        }
+        args.update(overrides)
+        return check_stage("finalization", self.root, **args)
+
     def test_translation_is_ready_with_ready_context(self):
-        result = check_stage(
-            "translation", self.root, handoff="handoff.json"
-        )
+        result = check_stage("translation", self.root, handoff="handoff.json")
         self.assertEqual("ready", result["status"])
 
     def test_translation_is_blocked_by_pending_term(self):
         self.write_handoff(
             [{"source": "Text", "target": None, "disposition": "pending"}]
         )
-        result = check_stage(
-            "translation", self.root, handoff="handoff.json"
-        )
+        result = check_stage("translation", self.root, handoff="handoff.json")
         self.assertEqual("blocked", result["status"])
         self.assertEqual("terms_pending", result["context_status"])
 
-    def test_independent_review_returns_draft_hash(self):
-        result = check_stage(
-            "independent-review",
-            self.root,
-            handoff="handoff.json",
-            translation="translation.md",
-            review_notes="review-notes.md",
-        )
+    def test_finalization_starts_without_prior_review(self):
+        result = self.finalization()
         self.assertEqual("ready", result["status"])
-        expected = hashlib.sha256((self.root / "translation.md").read_bytes()).hexdigest()
-        self.assertEqual(expected, result["draft_sha256"])
 
-    def test_independent_review_refuses_existing_output(self):
+    def test_finalization_requires_retrievable_initial_draft(self):
+        (self.root / "initial-draft.md").unlink()
+        result = self.finalization()
+        self.assertEqual("blocked", result["status"])
+
+    def test_finalization_rejects_changed_draft_at_start(self):
+        (self.root / "translation.md").write_text("Edited already", encoding="utf-8")
+        result = self.finalization()
+        self.assertEqual("blocked", result["status"])
+        self.assertIn("initial draft unchanged", [c["name"] for c in result["checks"] if not c["ok"]])
+
+    def test_finalization_protects_existing_review_record(self):
         (self.root / "review-notes.md").write_text("existing", encoding="utf-8")
-        result = check_stage(
-            "independent-review",
-            self.root,
-            handoff="handoff.json",
-            translation="translation.md",
-            review_notes="review-notes.md",
-        )
+        result = self.finalization()
         self.assertEqual("blocked", result["status"])
 
-    def test_review_complete_accepts_unchanged_draft(self):
-        (self.root / "review-notes.md").write_text("reviewed", encoding="utf-8")
-        expected = hashlib.sha256((self.root / "translation.md").read_bytes()).hexdigest()
-        result = check_stage(
-            "review-complete",
-            self.root,
-            translation="translation.md",
-            review_notes="review-notes.md",
-            expected_draft_sha256=expected,
-        )
+    def test_finalization_can_resume_after_working_translation_changes(self):
+        (self.root / "review-notes.md").write_text("decisions", encoding="utf-8")
+        (self.root / "translation.md").write_text("Edited from decisions", encoding="utf-8")
+        result = self.finalization(resume=True)
         self.assertEqual("ready", result["status"])
 
-    def test_review_complete_blocks_changed_draft(self):
-        (self.root / "review-notes.md").write_text("reviewed", encoding="utf-8")
-        result = check_stage(
-            "review-complete",
-            self.root,
-            translation="translation.md",
-            review_notes="review-notes.md",
-            expected_draft_sha256="0" * 64,
-        )
+    def test_finalization_resume_requires_existing_record(self):
+        result = self.finalization(resume=True)
         self.assertEqual("blocked", result["status"])
 
-    def test_finalization_requires_both_note_files(self):
-        result = check_stage(
-            "finalization",
-            self.root,
-            handoff="handoff.json",
-            translation="translation.md",
-            drafting_notes="drafting-notes.md",
-            review_notes="review-notes.md",
-        )
-        self.assertEqual("blocked", result["status"])
-
-    def test_finalization_is_ready_with_required_files(self):
-        digest = hashlib.sha256((self.root / "translation.md").read_bytes()).hexdigest()
-        (self.root / "review-notes.md").write_text(
-            "# Review\n\n"
-            f"<!-- translation-workbench:draft-sha256-before={digest} -->\n"
-            f"<!-- translation-workbench:draft-sha256-after={digest} -->\n",
-            encoding="utf-8",
-        )
-        result = check_stage(
-            "finalization",
-            self.root,
-            handoff="handoff.json",
-            translation="translation.md",
-            drafting_notes="drafting-notes.md",
-            review_notes="review-notes.md",
-        )
-        self.assertEqual("ready", result["status"])
-
-    def test_finalization_blocks_missing_review_hash_markers(self):
-        (self.root / "review-notes.md").write_text("reviewed", encoding="utf-8")
-        result = check_stage(
-            "finalization",
-            self.root,
-            handoff="handoff.json",
-            translation="translation.md",
-            drafting_notes="drafting-notes.md",
-            review_notes="review-notes.md",
-        )
+    def test_snapshot_must_be_a_separate_file(self):
+        result = self.finalization(initial_draft="translation.md")
         self.assertEqual("blocked", result["status"])
 
     def test_cli_uses_blocked_exit_code(self):

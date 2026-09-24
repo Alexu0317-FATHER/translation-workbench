@@ -1,75 +1,31 @@
 # Finalization
 
-Use this stage to merge drafting and review concerns, collect user decisions, apply approved changes, perform a final comparison, and deliver the final translation.
+Use this stage to confirm the complete translation with the user, record each decision, apply the decisions together, and check the saved result against the source. The review record is created here; it is not a prerequisite from another stage.
 
-## Inputs
+## Inputs and preflight
 
-- the project README;
-- the source unit;
-- the current translation draft;
-- drafting notes;
-- review notes;
-- applicable glossary, character, background, source, and translator-style documents.
+Read the project README, complete source, current draft, drafting notes, initial-draft snapshot, and applicable project references. Read the complete source and draft before presenting individual passages. Use the drafting notes as leads, not as proof that an interpretation is correct.
 
-Run the finalization preflight:
+Unless the project has another established location for the initial-draft copy, use `initial-draft.md` beside the translation. Start a new finalization with:
 
 ```text
-python <skill-dir>/scripts/check_stage.py finalization --project-root <project-root> --handoff <sourcing-handoff.json> --translation <draft-path> --drafting-notes <drafting-notes-path> --review-notes <review-path>
+python <skill-dir>/scripts/check_stage.py finalization --project-root <project-root> --handoff <sourcing-handoff.json> --translation <draft-path> --initial-draft <snapshot-path> --drafting-notes <drafting-notes-path> --review-notes <review-path>
 ```
 
-Proceed only after it returns `status: ready`.
+Proceed only after `status: ready`. An existing review record is never overwritten. To continue a finalization already in progress, use the same command with `--resume`; it requires the review record to exist and does not expect the working translation still to equal its initial snapshot.
 
-## Merge the notes
+## Confirm in source order
 
-Compare drafting notes and review notes by source location and issue content.
+Present the source and corresponding draft passage in order, with stable source locations where available. For a passage named in the drafting notes, show its recorded choice, source feature, or awkward spot; for other passages, show the source and draft without inventing an issue. Let the user keep, revise, or question each passage.
 
-- Do not duplicate an issue already covered by the review.
-- Add drafting-only concerns to the appropriate review section.
-- Preserve conflicting interpretations and present them to the user.
-- Treat note merging as preparation, not as a user decision.
+Create a finalization record from `assets/templates/review-notes.md` at the project's chosen path, defaulting to `review-notes.md` when none is specified. For each confirmed passage, record the final wording or “keep draft” and the decision's reason. Quote the user's stated reason accurately; identify any added model analysis as model analysis. If the user gives no reason, do not supply one on their behalf. Keep conflicting readings visible until the user decides.
 
-## Collect user decisions
+Confirmed durable names and verifiable background facts can be updated in their existing reference files as those decisions are made. Passage-specific choices stay in review notes. Leave character voice, reading premises, and cross-unit style proposals for the separate, user-started distillation.
 
-Process issues in document order unless the user requests another order.
-
-- Use a structured user-input tool only when the options are short and understandable without losing necessary evidence.
-- For nuanced translation choices, show the relevant source, current translation, issue, tradeoffs, and recommendation in ordinary conversation.
-- Record the user's decision before modifying the translation.
-- Do not repeatedly reopen a decision after the user has made it unless new evidence appears.
-
-Mechanical corrections marked during review do not need a separate editorial decision.
-
-## Apply decisions
-
-- Apply user-approved changes and unambiguous mechanical corrections.
-- Leave passages unchanged when the user chooses to keep the current translation.
-- Preserve document order, formatting, links, images, and annotations unless the user approved a related change.
-- Mark each review item completed after its decision has been applied or confirmed as requiring no change.
-
-Allow the user to make their own edits when they want to. Treat the saved file after those edits as the current translation.
+Do not edit the working translation during the passage-by-passage confirmation. Once all passages have outcomes, apply the recorded final wording together. Preserve source order and the project's existing Markdown structure, links, images, and annotations unless the user has chosen a related change.
 
 ## Final check
 
-Read the complete current translation and compare it with the complete source again.
+Give the user room to make their own edits. Then reread the current saved translation and compare it with the complete source. Check completeness, meaning, order, voice, terminology, annotations, and new mechanical errors. Correct unambiguous mechanical errors; return new substantive issues to the user and record their decisions. The current file, including user edits, is the text being checked.
 
-Check completeness, accuracy, order, voice, terminology, notes, formatting, and new mechanical errors introduced during finalization.
-
-- Correct new unambiguous mechanical errors.
-- Add any new substantive issue to the review notes and return it to user decision.
-- Do not treat earlier review notes as proof that later user edits are correct.
-
-## Durable project knowledge
-
-After the translation is confirmed, identify only decisions that may affect later work. Propose changes to the glossary, character profiles, background notes, source inventory, or translator-style document.
-
-Write those changes only after the user approves them. Do not convert one passage-specific solution into a general project rule.
-
-## Completion
-
-- all review and drafting concerns have recorded outcomes;
-- approved changes are reflected in the translation;
-- the final source-to-translation comparison is complete;
-- durable project-document updates are either approved and written or explicitly declined;
-- the user has confirmed the final translation.
-
-Record finalization in the review notes and report the final translation path. The skill ends here. Do not continue into publishing or platform conversion.
+Ask the user to confirm the final translation. Record that confirmation and any project-defined handoff information in the review notes. The initial-draft snapshot stays unchanged for later comparison. This stage ends at the confirmed translation and its notes.

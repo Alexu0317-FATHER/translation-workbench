@@ -7,7 +7,7 @@ Thanks for taking a look. This is a small project, and issues are more useful to
 Open an [issue](https://github.com/Alexu0317-FATHER/translation-workbench/issues) and include:
 
 - which runtime you were on (Codex, Claude Code, or something else);
-- which stage you were in: initialization, source preparation, translation, independent review, or finalization;
+- which stage you were in: initialization, source preparation, translation, finalization, or user-started distillation;
 - what you asked for and what happened instead;
 - the JSON a checker printed, if one was involved.
 
@@ -22,9 +22,9 @@ Judgments about a particular translation belong in your own project's notes, not
 ## If you are opening a pull request
 
 - Run `python scripts/validate_repository.py` from the repository root. It checks the required files, Markdown links, JSON, and public content, and runs the unit tests. It must pass.
-- The skill has one canonical copy, at `skills/translation-workbench/`. Do not add a second copy for another runtime.
+- The two canonical skills live under `skills/translation-workbench/` and `skills/translation-distillation/`. Do not add copies for another runtime.
 - `README.md` and `README.zh.md` say the same thing in two languages. If you change one, change both.
-- Anything that changes the skill's behavior needs an entry in `CHANGELOG.md` under `[Unreleased]`.
+- Anything that changes a skill's behavior needs an entry in `CHANGELOG.md` under its release version.
 - Keep the installable skill generic. No project-specific names, no absolute paths, no personal material.
 
 ## License
