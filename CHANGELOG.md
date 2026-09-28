@@ -2,6 +2,13 @@
 
 All notable changes to Translation Workbench are recorded here.
 
+## [0.2.2] - 2026-09-28
+
+### Changed
+
+- Finalization scopes the model's agreement analysis to what changed. Kept drafts need none; revised passages explain what was wrong with the draft and how the final wording solves it; when the user already gave a reason, the model adds only what they left out; mechanical fixes get a one-line note without confirmation. A rewritten analysis needs fresh confirmation.
+- Distillation now uses user-confirmed model analysis as a source of reasons, weighted below the user's own words, and checks reasons that rest on it alone with the user before they enter a reference.
+
 ## [0.2.1] - 2026-09-28
 
 ### Changed

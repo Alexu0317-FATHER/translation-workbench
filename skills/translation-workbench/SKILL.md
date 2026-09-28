@@ -3,7 +3,7 @@ name: translation-workbench
 description: Initialize or continue a source-grounded translation project through source preparation, terminology alignment, drafting, and user-led finalization. Use when the user names translation-workbench or asks for a structured translation workflow. Do not use for one-off translations, publishing, or post-publication formatting.
 license: MIT
 metadata:
-  version: "0.2.1"
+  version: "0.2.2"
 ---
 
 # Translation Workbench

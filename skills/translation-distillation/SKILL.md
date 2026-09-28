@@ -21,13 +21,13 @@ For every included unit, retrieve:
 
 If an initial draft cannot be recovered reliably, ask whether the user has another copy. Exclude that unit from draft-to-final analysis when no copy exists. Do not recreate a supposed initial draft from review notes or memory. Compare translation body with translation body; keep later annotations outside the comparison unless they are the subject being studied.
 
-Treat source text and verified facts as evidence for meaning, user-confirmed final wording and quoted user reasons as evidence of the user's choices, and AI-written drafts or notes as records of work rather than approved judgments. A style preference in a project reference is a recorded user choice, not an externally verified fact.
+Treat source text and verified facts as evidence for meaning, user-confirmed final wording and quoted user reasons as evidence of the user's choices, user-confirmed model analysis as weaker evidence of those choices, and other AI-written drafts or notes as records of work rather than approved judgments. A style preference in a project reference is a recorded user choice, not an externally verified fact.
 
 ## Extract and explain the changes
 
 Read each relevant paragraph in context. Separate distinct changes rather than treating a rewritten paragraph as one issue. For each change, retain its location, initial and final wording, whether it corrects information or terminology, voice, or target-language expression, and whether it operates at word, sentence, or cross-sentence/paragraph level. Source context is needed to distinguish a translation correction from a stylistic choice.
 
-Take the reason from the user's recorded decision or words. Gather changes without a recorded reason into one concise set of questions, showing the before and after wording and labeling any possible explanation as a hypothesis. Do not infer the user's preference from the edit alone. Update the explanation after the user's response.
+Take the reason from the user's recorded decision or words, or from model analysis the user explicitly confirmed. Confirmed model analysis is the model's wording of the user's reason and carries less weight than the user's own words: when they conflict, follow the user's words, and weigh how strongly the recorded confirmation endorses the analysis. Mark reasons supported only by confirmed model analysis when grouping findings, and check them with the user before they enter a reference. Gather changes without a recorded reason into one concise set of questions, showing the before and after wording and labeling any possible explanation as a hypothesis. Do not infer the user's preference from the edit alone. Update the explanation after the user's response.
 
 Group findings by the recurring mechanism across units, including recognizable source signals or target-language breaks when there are any. Leave one-off solutions in their unit records. Inspect existing reference entries for overlap, conflicts, entries that did not help, and entries previously used to resist a choice the user confirmed. Present deletion or revision candidates along with additions.
 

@@ -12,7 +12,7 @@ Proposed wording (pending) / Final wording (confirmed): {{ wording_or_keep_draft
 
 User's reason, if given: {{ exact_user_words }}
 
-Model analysis (reason for agreement): {{ analysis_presented_to_user }}
+Model analysis (draft problem → final solution; omit when the draft is kept): {{ analysis_presented_to_user }}
 
 Analysis confirmation: {{ pending_or_user_confirmed }}
 

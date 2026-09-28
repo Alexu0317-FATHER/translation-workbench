@@ -18,9 +18,16 @@ Proceed only after `status: ready`. An existing review record is never overwritt
 
 Present the source and corresponding draft passage in order, with stable source locations where available. For a passage named in the drafting notes, show its recorded choice, source feature, or awkward spot; for other passages, show the source and draft without inventing an issue. Let the user keep, revise, or question each passage.
 
-Create a finalization record from `assets/templates/review-notes.md` at the project's chosen path, defaulting to `review-notes.md` when none is specified. After the user proposes wording, explain any disagreement or, when you agree, state your understanding of why the wording works as model analysis. Present that analysis to the user and ask them to confirm it before marking the passage confirmed or moving to the next passage. Agreement by the model alone does not finalize a passage; save proposed wording and analysis as pending until the user confirms.
+Create a finalization record from `assets/templates/review-notes.md` at the project's chosen path, defaulting to `review-notes.md` when none is specified. After the user proposes wording, explain any disagreement or, when you agree, write model analysis within the scope below. Present that analysis to the user and ask them to confirm it before marking the passage confirmed or moving to the next passage. Agreement by the model alone does not finalize a passage; save proposed wording and analysis as pending until the user confirms.
 
-For each confirmed passage, record the final wording or “keep draft”, the model's analysis, and the user's confirmation in their own words. Quote any reasons the user provides accurately and separately. When the user gives no reason, still explain your own reasoning for their confirmation; do not require an additional explanation from them or present your analysis as their words. After confirmation, label the analysis as model-written and user-confirmed. Keep conflicting readings visible until the user decides.
+How much analysis to write depends on what changed:
+
+- **Draft kept:** write none. Distillation studies only what the user changed, so there is nothing here for it to use.
+- **Draft revised:** state what was wrong with the draft and how the final wording solves it: where a reader would stall, misread, or lose the tone, and what the new wording does about it. Do not write praise of the final wording.
+- **User already gave a reason:** add only what they did not say, such as which words carry their reason. If there is nothing to add, write none and ask for no confirmation.
+- **Typo, punctuation, or a synonym with no difference in meaning:** note the type of change in one line; no confirmation is needed.
+
+For each confirmed passage, record the final wording or “keep draft”, any model analysis, and the user's confirmation in their own words. Quote any reasons the user provides accurately and separately. When the user gives no reason, do not require an additional explanation from them or present your analysis as their words. After confirmation, label the analysis as model-written and user-confirmed. If the analysis is rewritten, the earlier confirmation no longer applies; ask again. Keep conflicting readings visible until the user decides.
 
 Confirmed durable names and verifiable background facts can be updated in their existing reference files as those decisions are made. Passage-specific choices stay in review notes. Leave character voice, reading premises, and cross-unit style proposals for the separate, user-started distillation.
 

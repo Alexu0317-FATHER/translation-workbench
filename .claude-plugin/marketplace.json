@@ -14,7 +14,7 @@
       "source": "./",
       "strict": false,
       "description": "Prepare source material, draft translations, and finalize them with the user; distill recurring lessons across completed units when requested.",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "license": "MIT",
       "author": {
         "name": "Alexu0317-FATHER",
