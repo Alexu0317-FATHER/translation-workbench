@@ -2,6 +2,13 @@
 
 All notable changes to Translation Workbench are recorded here.
 
+## [0.2.1] - 2026-09-28
+
+### Changed
+
+- Finalization now presents the model's reason for agreeing with proposed wording and waits for the user to confirm that understanding before marking the passage confirmed or advancing. The user need not supply a separate explanation.
+- Review notes distinguish pending wording, model-written analysis, the user's own reasons when provided, and explicit user confirmation. Updated the template and both READMEs to match.
+
 ## [0.2.0] - 2026-09-25
 
 ### Changed

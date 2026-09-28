@@ -8,13 +8,17 @@ Source: {{ source_excerpt }}
 
 Draft: {{ draft_excerpt }}
 
-Final wording: {{ confirmed_wording_or_keep_draft }}
+Proposed wording (pending) / Final wording (confirmed): {{ wording_or_keep_draft }}
 
-User's reason: {{ exact_user_words_if_given }}
+User's reason, if given: {{ exact_user_words }}
 
-Model analysis, if useful: {{ clearly_attributed_analysis }}
+Model analysis (reason for agreement): {{ analysis_presented_to_user }}
 
-Status: {{ confirmed_or_pending }}
+Analysis confirmation: {{ pending_or_user_confirmed }}
+
+User's confirmation: {{ exact_user_words_and_date_when_confirmed }}
+
+Passage status: {{ pending_until_user_confirms_analysis_or_confirmed }}
 
 ## Finalization record
 

@@ -8,9 +8,9 @@ English | [简体中文](README.zh.md)
 
 Translation Workbench is a set of Agent Skills for translation projects in Claude Code and Codex. The AI helps you understand the source, find supporting evidence, and draft a translation. What you learn from editing it can then guide later work.
 
-Current version: `0.2.0`
+Current version: `0.2.1`
 
-**What's new in 0.2.0:** Distillation is now a separate skill that draws on drafts, final translations, and your reasons for edits across several units. Drafting notes also flag source passages worth checking and wording that still reads awkwardly, giving you concrete places to begin the discussion. [See the changelog](CHANGELOG.md)
+**What's new in 0.2.1:** When the AI agrees with your wording, it explains why and asks you to confirm its understanding before finalizing the passage. The record preserves the AI's analysis and your confirmation separately. [See the changelog](CHANGELOG.md)
 
 ## Features
 
@@ -40,7 +40,7 @@ A term confirmed in Chapter 7, [The Wolves of Winter](https://alexu0317-father.g
 | Initialization | Provide material and say where you want to begin | Read or create the project entry point and preserve a workable directory layout |
 | Source preparation | Supply the source and existing references | Check provenance and completeness, search terminology, and prepare unresolved terms and relevant context |
 | Translation | Decide the translations of pending terms | Produce a draft and drafting notes, then save an initial-draft copy |
-| Finalization | Discuss passages, choose the wording, and explain your reasons | Present source and translation, record decisions, apply them together, and check the final saved text |
+| Finalization | Discuss passages, choose the wording, and confirm the AI's understanding | Present source and translation, explain agreement or disagreement, obtain your confirmation of the analysis, record decisions, apply them together, and check the final saved text |
 | Distillation (separate skill) | Decide which proposed insights belong in your translator style | Read work from earlier units and ask about the reasoning behind your edits to identify patterns worth keeping |
 
 ### Start with a message
@@ -74,12 +74,12 @@ In Codex, the distillation skill appears in the skill list as “沉淀 / Transl
 
 **Drafting notes:** The AI creates these while translating to record why it made particular choices and where it ran into problems. You do not have to read them in advance; during finalization, the AI brings up the relevant notes passage by passage.
 
-**Finalization record:** Created during finalization to preserve your decisions and reasons.
+**Finalization record:** Created during finalization to preserve your wording, any reasons you provide, the AI's analysis, and your confirmation of that analysis. A passage stays pending until you confirm the AI's understanding.
 
 ## Getting more out of it
 
 - **Use your own writing voice:** If a passage feels awkward, point out where it loses you and how you would say it. Understanding the source and writing well are different skills; the creative choices that give a translation its soul are yours.
-- **Explain your edits when you can:** “This is better” leaves little to work with. “Each sentence makes sense alone, but together they leave the subject unclear” can become useful guidance for later work.
+- **Confirm the reasoning behind your edits:** When the AI agrees with your wording, it explains its understanding for you to confirm or correct. You do not need to supply a separate explanation each time; any reasons you do provide are preserved in your own words.
 - **Distill across several completed units:** A group of finalization records helps distinguish one-off wording from recurring problems. Terminology, facts, character voice, and general style go into their respective references, and existing entries can be revised or removed.
 - **Use a separate session for each stage:** Keeping the stages in separate conversations gives the AI a clearer context and better performance.
 - **Keep asking the AI:** If material is missing, terms are undecided, or a file might be overwritten, the skills explain what needs attention.
