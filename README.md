@@ -8,9 +8,9 @@ English | [简体中文](README.zh.md)
 
 Translation Workbench is a set of Agent Skills for translation projects in Claude Code and Codex. The AI helps you understand the source, find supporting evidence, and draft a translation. What you learn from editing it can then guide later work.
 
-Current version: `0.2.2`
+Current version: `0.2.3`
 
-**What's new in 0.2.2:** The AI writes an analysis only where you changed the draft, explaining what the draft got wrong and how your wording fixes it. Distillation can now draw on analyses you confirmed, weighted below your own words. [See the changelog](CHANGELOG.md)
+**What's new in 0.2.3:** If you explain your edits by voice, the AI can condense your words by removing fillers, repetitions, and mis-transcriptions. Once you confirm the condensed version, it counts as your own words, keeping finalization records compact for later distillation. [See the changelog](CHANGELOG.md)
 
 ## Features
 
@@ -79,7 +79,7 @@ In Codex, the distillation skill appears in the skill list as “沉淀 / Transl
 ## Getting more out of it
 
 - **Use your own writing voice:** If a passage feels awkward, point out where it loses you and how you would say it. Understanding the source and writing well are different skills; the creative choices that give a translation its soul are yours.
-- **Confirm the reasoning behind your edits:** When you revise the draft and the AI agrees, it explains what the draft got wrong and how your wording fixes it, for you to confirm or correct. You do not need to supply a separate explanation each time; any reasons you do provide are preserved in your own words.
+- **Confirm the reasoning behind your edits:** When you revise the draft and the AI agrees, it explains what the draft got wrong and how your wording fixes it, for you to confirm or correct. You do not need to supply a separate explanation each time; any reasons you do provide are preserved in your own words, condensed for your confirmation when they run long.
 - **Distill across several completed units:** A group of finalization records helps distinguish one-off wording from recurring problems. Terminology, facts, character voice, and general style go into their respective references, and existing entries can be revised or removed.
 - **Use a separate session for each stage:** Keeping the stages in separate conversations gives the AI a clearer context and better performance.
 - **Keep asking the AI:** If material is missing, terms are undecided, or a file might be overwritten, the skills explain what needs attention.

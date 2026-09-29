@@ -2,6 +2,12 @@
 
 All notable changes to Translation Workbench are recorded here.
 
+## [0.2.3] - 2026-09-29
+
+### Changed
+
+- Finalization may condense the user's recorded reasons when they are verbose, as voice dictation often is: fillers, repetitions, false starts, mis-transcriptions, and unrelated asides are removed while reasoning steps, examples, and judgment words are kept. A condensed version is labeled and shown to the user; once confirmed, it counts as the user's own words. This keeps review notes compact for later distillation.
+
 ## [0.2.2] - 2026-09-28
 
 ### Changed

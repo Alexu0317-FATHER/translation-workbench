@@ -21,7 +21,7 @@ For every included unit, retrieve:
 
 If an initial draft cannot be recovered reliably, ask whether the user has another copy. Exclude that unit from draft-to-final analysis when no copy exists. Do not recreate a supposed initial draft from review notes or memory. Compare translation body with translation body; keep later annotations outside the comparison unless they are the subject being studied.
 
-Treat source text and verified facts as evidence for meaning, user-confirmed final wording and quoted user reasons as evidence of the user's choices, user-confirmed model analysis as weaker evidence of those choices, and other AI-written drafts or notes as records of work rather than approved judgments. A style preference in a project reference is a recorded user choice, not an externally verified fact.
+Treat source text and verified facts as evidence for meaning, user-confirmed final wording and the user's recorded reasons (including condensed versions the user confirmed) as evidence of the user's choices, user-confirmed model analysis as weaker evidence of those choices, and other AI-written drafts or notes as records of work rather than approved judgments. A style preference in a project reference is a recorded user choice, not an externally verified fact.
 
 ## Extract and explain the changes
 

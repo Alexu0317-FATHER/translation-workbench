@@ -10,7 +10,7 @@ Draft: {{ draft_excerpt }}
 
 Proposed wording (pending) / Final wording (confirmed): {{ wording_or_keep_draft }}
 
-User's reason, if given: {{ exact_user_words }}
+User's reason, if given: {{ user_words_or_user_confirmed_condensed_version }}
 
 Model analysis (draft problem → final solution; omit when the draft is kept): {{ analysis_presented_to_user }}
 
